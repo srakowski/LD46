@@ -3,6 +3,7 @@
 // file 'LICENSE.txt', which is part of this source code package.
 
 using Coldsteel.Controls;
+using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,14 +13,18 @@ namespace Coldsteel
 	{
 		public EngineConfig(
 			ISceneFactory sceneFactory,
-			IEnumerable<Control> controls)
+			IEnumerable<Control> controls,
+			Point screenDim)
 		{
 			SceneFactory = sceneFactory;
 			Controls = controls.ToDictionary((ks) => ks.Name);
+			ScreenDim = screenDim;
 		}
 
 		public ISceneFactory SceneFactory { get; }
 
 		public IReadOnlyDictionary<string, Control> Controls { get; }
+
+		public Point ScreenDim { get; }
 	}
 }

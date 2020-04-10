@@ -98,5 +98,15 @@ namespace Coldsteel
 			configure(sprite);
 			return AddComponent(sprite);
 		}
+
+		public Entity AddCamera() => AddComponent(new Camera());
+		public Entity AddCamera(Action<Camera> configure)
+		{
+			var camera = new Camera();
+			configure(camera);
+			return AddComponent(camera);
+		}
+
+		public static Entity New => new Entity();
 	}
 }

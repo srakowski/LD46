@@ -1,4 +1,5 @@
 ﻿using Coldsteel;
+using Microsoft.Xna.Framework;
 using System;
 
 namespace LD46
@@ -9,9 +10,29 @@ namespace LD46
 		{
 			switch (sceneName)
 			{
+				case nameof(MainMenuScene): return MainMenuScene(gameState as LDJamGameState);
 				case nameof(GameplayScene): return GameplayScene(gameState as LDJamGameState);
 				default: throw new NotImplementedException("TODO");
 			}
+		}
+
+		public Scene MainMenuScene(LDJamGameState gameState)
+		{
+			var scene = new Scene();
+
+			// TODO: add assets
+
+			scene.AddSpriteLayers();
+
+			// TODO: add entities
+			scene.AddEntity(
+				Entity.New.AddCamera(c =>
+				{
+					c.BackgroundColor = Color.CornflowerBlue;
+				})
+			);
+
+			return scene;
 		}
 
 		public Scene GameplayScene(LDJamGameState gameState)

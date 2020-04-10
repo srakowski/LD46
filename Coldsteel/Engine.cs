@@ -9,9 +9,10 @@ namespace Coldsteel
 {
 	public class Engine : GameComponent
 	{
-		public Engine(Game game, EngineConfig config) : base(game)
+		public Engine(Game game, GraphicsDeviceManager graphics, EngineConfig config) : base(game)
 		{
 			Config = config;
+			game.Services.AddService<GraphicsDeviceManager>(graphics);
 			game.Components.Add(this);
 			SceneManager = new SceneManager(game, this, config.SceneFactory);
 			InputManager = new InputManager(game, this);

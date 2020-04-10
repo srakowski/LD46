@@ -15,16 +15,30 @@ namespace LD46
 				PreferredBackBufferWidth = 1440,
 				PreferredBackBufferHeight = 900,
 			};
+			_graphics.ApplyChanges();
 
 			Window.AllowUserResizing = true;
 			Content.RootDirectory = "Content";
 			IsMouseVisible = true;
 
-			_engine = new Engine(this, new EngineConfig(
-				new SceneFactory(),
-				Controls.Create()
-			));
+			_engine = new Engine(
+				this,
+				_graphics,
+				new EngineConfig(
+					new SceneFactory(),
+					Controls.Create(),
+					new Point(1024, 768)
+				)
+			);
+		}
 
+		protected override void Initialize()
+		{
+			base.Initialize();
+			_engine.LoadScene(
+				nameof(SceneFactory.MainMenuScene),
+				new LDJamGameState()
+			);
 		}
 	}
 }

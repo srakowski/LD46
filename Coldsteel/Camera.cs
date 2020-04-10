@@ -8,6 +8,8 @@ namespace Coldsteel
 {
 	public class Camera : Component
 	{
+		public Color BackgroundColor = Color.Black;
+
 		public bool Enabled = true;
 
 		public Vector2 ToWorldCoords(Vector2 coords) =>

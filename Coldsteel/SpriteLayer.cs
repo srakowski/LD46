@@ -37,7 +37,7 @@ namespace Coldsteel
 			Name = name;
 		}
 
-		internal void Draw(SpriteBatch spriteBatch, Camera camera, IEnumerable<ISprite> sprites, Matrix scaleMatrix)
+		internal void Draw(SpriteBatch spriteBatch, Camera camera, IEnumerable<ISprite> sprites)
 		{
 			var cameraMatrix = camera != null && !FixToCamera
 				? camera.TransformationMatrix
