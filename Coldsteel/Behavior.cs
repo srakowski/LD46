@@ -4,7 +4,6 @@
 
 using Coldsteel.Controls;
 using Microsoft.Xna.Framework;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 

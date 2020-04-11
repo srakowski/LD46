@@ -2,6 +2,7 @@
 // This file is subject to the terms and conditions defined in
 // file 'LICENSE.txt', which is part of this source code package.
 
+using Coldsteel.UI;
 using Microsoft.Xna.Framework;
 using System.Runtime.CompilerServices;
 
@@ -19,6 +20,8 @@ namespace Coldsteel
 			BehaviorSystem = new BehaviorSystem(game, this);
 			CollisionSystem = new CollisionSystem(game, this);
 			SpriteSystem = new SpriteSystem(game, this);
+			UISystem = new UISystem(game, this);
+			RenderingSystem = new RenderingSystem(game, this);
 		}
 
 		internal EngineConfig Config;
@@ -32,6 +35,10 @@ namespace Coldsteel
 		internal CollisionSystem CollisionSystem;
 
 		internal SpriteSystem SpriteSystem;
+
+		internal UISystem UISystem;
+
+		internal RenderingSystem RenderingSystem;
 
 		public void LoadScene(string sceneName, GameState gameState)
 		{

@@ -1,4 +1,5 @@
 ﻿using Coldsteel;
+using Coldsteel.UI;
 using Microsoft.Xna.Framework;
 using System;
 
@@ -25,12 +26,10 @@ namespace LD46
 			scene.AddSpriteLayers();
 
 			// TODO: add entities
-			scene.AddEntity(
-				Entity.New.AddCamera(c =>
-				{
-					c.BackgroundColor = Color.CornflowerBlue;
-				})
-			);
+
+			var gui = Entity.New
+				.AddComponent(new View());
+			scene.AddEntity(gui);
 
 			return scene;
 		}
