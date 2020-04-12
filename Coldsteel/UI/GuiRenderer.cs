@@ -2,103 +2,18 @@
 // This file is subject to the terms and conditions defined in
 // file 'LICENSE.txt', which is part of this source code package.
 
+using Coldsteel.UI.Elements;
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
-using System.Runtime.InteropServices;
-using MGRectangle = Microsoft.Xna.Framework.Rectangle;
-using MGColor = Microsoft.Xna.Framework.Color;
 using System.Drawing.Text;
+using System.Runtime.InteropServices;
+using MGColor = Microsoft.Xna.Framework.Color;
+using MGRectangle = Microsoft.Xna.Framework.Rectangle;
 
 namespace Coldsteel.UI
 {
-	internal class RenderTree
-	{
-		public RenderTree(Box root)
-		{
-			Root = root;
-		}
-
-		public Box Root { get; }
-	}
-
-	internal abstract class RenderNode
-	{
-		public void Match(
-			Action<Text> text,
-			Action<Box> box)
-		{
-			switch (this)
-			{
-				case Text t: text(t); break;
-				case Box b: box(b); break;
-			}
-		}
-	}
-
-	internal class Text : RenderNode
-	{
-		public MGRectangle Bounds { get; }
-
-		public MGColor Color { get; }
-
-		public string Value { get; }
-	}
-
-	internal struct BorderRadius
-	{
-		public BorderRadius(int radius)
-			: this(radius, radius, radius, radius)
-		{
-		}
-
-		public BorderRadius(int tl, int tr, int bl, int br)
-		{
-			TopLeft = tl;
-			TopRight = tr;
-			BottomLeft = bl;
-			BottomRight = br;
-		}
-
-		public int TopLeft;
-		public int TopRight;
-		public int BottomLeft;
-		public int BottomRight;
-	}
-
-	internal class Box : RenderNode
-	{
-		public Box(
-			MGRectangle bounds,
-			RenderNode[] children,
-			MGColor? bgColor = null,
-			MGColor? borderColor = null,
-			int borderWidth = 0,
-			BorderRadius borderRadius = default
-			)
-		{
-			Bounds = bounds;
-			Children = children;
-			BackgroundColor = bgColor ?? MGColor.Transparent;
-			BorderColor = borderColor ?? MGColor.Transparent;
-			BorderWidth = borderWidth;
-			BorderRadius = borderRadius;
-		}
-
-		public MGRectangle Bounds { get; }
-
-		public RenderNode[] Children { get; }
-
-		public MGColor BackgroundColor { get; }
-
-		public MGColor BorderColor { get; }
-
-		public int BorderWidth { get; }
-
-		public BorderRadius BorderRadius { get; }
-	}
-
 	internal class GuiRenderer : IDisposable
 	{
 		private Bitmap _image;
@@ -121,10 +36,13 @@ namespace Coldsteel.UI
 			_image.Dispose();
 		}
 
-		public void Render(RenderTree tree, byte[] data)
+		public void Clear()
 		{
 			_graphics.Clear(Color.Transparent);
-			RenderNode(_graphics, tree.Root);
+		}
+
+		internal void Export(byte[] data)
+		{
 			_graphics.Save();
 			var bd = _image.LockBits(new Rectangle(0, 0, _image.Width, _image.Height), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
 			Marshal.Copy(bd.Scan0, data, 0, data.Length);
@@ -138,40 +56,49 @@ namespace Coldsteel.UI
 			_image.UnlockBits(bd);
 		}
 
-		private static void RenderNode(Graphics graphics, RenderNode node)
+		internal void RenderText(Text text)
 		{
-			node.Match(
-				text: t => RenderText(graphics, t),
-				box: b => RenderBox(graphics, b)
-			);
-		}
+			var style = FontStyle.Regular;
+			if (text.Bold) style |= FontStyle.Bold;
+			if (text.Italic) style |= FontStyle.Italic;
 
-		private static void RenderText(Graphics graphics, Text node)
-		{
-		}
-
-		private static void RenderBox(Graphics graphics, Box box)
-		{
-			using (var pen = new Pen(box.BorderColor.ToSys(), box.BorderWidth))
-			using (var path = MakeBoxPath(box))
-			using (var bgBrush = new SolidBrush(box.BackgroundColor.ToSys()))
+			using (var brush = new SolidBrush(text.Color.ToSys()))
+			using (var font = new Font(text.Font, text.Size, style))
 			{
-				graphics.FillPath(bgBrush, path);
-				graphics.DrawPath(pen, path);
+				_graphics.Clip = new Region(text.Bounds.ToSys());
+				_graphics.DrawString(text.Value, font, brush, text.Bounds.ToSys(), new StringFormat
+				{
+					Alignment = text.Align.ToSys(),
+					LineAlignment = text.VerticalAlign.ToSys(),
+				});
+			}
+		}
+
+		internal void RenderDiv(Div div)
+		{
+			using (var path = MakeDivPath(div))
+			using (var bgBrush = new SolidBrush(div.BackgroundColor.ToSys()))
+			{
+				_graphics.FillPath(bgBrush, path);
+				if (div.BorderWidth > 0)
+				{
+					using (var pen = new Pen(div.BorderColor.ToSys(), div.BorderWidth))
+						_graphics.DrawPath(pen, path);
+				}
 			}
 		}
 
 		// Adapted from: http://csharphelper.com/blog/2016/01/draw-rounded-rectangles-in-c/
-		private static GraphicsPath MakeBoxPath(Box box)
+		private static GraphicsPath MakeDivPath(Div div)
 		{
 			PointF point1, point2;
 			var path = new GraphicsPath();
 
-			var rectangle = box.Bounds;
+			var rectangle = div.Bounds;
 
-			if (box.BorderRadius.TopLeft > 0)
+			if (div.BorderRadius.TopLeft > 0)
 			{
-				var radius = box.BorderRadius.TopLeft;
+				var radius = div.BorderRadius.TopLeft;
 				var corner = new RectangleF(rectangle.X, rectangle.Y, 2 * radius, 2 * radius);
 				path.AddArc(corner, 180, 90);
 				point1 = new PointF(rectangle.X + radius, rectangle.Y);
@@ -181,9 +108,9 @@ namespace Coldsteel.UI
 				point1 = new PointF(rectangle.X, rectangle.Y);
 			}
 
-			if (box.BorderRadius.TopRight > 0)
+			if (div.BorderRadius.TopRight > 0)
 			{
-				var radius = box.BorderRadius.TopRight;
+				var radius = div.BorderRadius.TopRight;
 				point2 = new PointF(rectangle.Right - radius, rectangle.Y);
 			}
 			else
@@ -192,9 +119,9 @@ namespace Coldsteel.UI
 			}
 			path.AddLine(point1, point2);
 
-			if (box.BorderRadius.TopRight > 0)
+			if (div.BorderRadius.TopRight > 0)
 			{
-				var radius = box.BorderRadius.TopRight;
+				var radius = div.BorderRadius.TopRight;
 				var corner = new RectangleF(rectangle.Right - 2 * radius, rectangle.Y, 2 * radius, 2 * radius);
 				path.AddArc(corner, 270, 90);
 				point1 = new PointF(rectangle.Right, rectangle.Y + radius);
@@ -204,9 +131,9 @@ namespace Coldsteel.UI
 				point1 = new PointF(rectangle.Right, rectangle.Y);
 			}
 
-			if (box.BorderRadius.BottomRight > 0)
+			if (div.BorderRadius.BottomRight > 0)
 			{
-				var radius = box.BorderRadius.BottomRight;
+				var radius = div.BorderRadius.BottomRight;
 				point2 = new PointF(rectangle.Right, rectangle.Bottom - radius);
 			}
 			else
@@ -215,9 +142,9 @@ namespace Coldsteel.UI
 			}
 			path.AddLine(point1, point2);
 
-			if (box.BorderRadius.BottomRight > 0)
+			if (div.BorderRadius.BottomRight > 0)
 			{
-				var radius = box.BorderRadius.BottomRight;
+				var radius = div.BorderRadius.BottomRight;
 				var corner = new RectangleF(rectangle.Right - 2 * radius, rectangle.Bottom - 2 * radius, 2 * radius, 2 * radius);
 				path.AddArc(corner, 0, 90);
 				point1 = new PointF(rectangle.Right - radius, rectangle.Bottom);
@@ -227,9 +154,9 @@ namespace Coldsteel.UI
 				point1 = new PointF(rectangle.Right, rectangle.Bottom);
 			}
 
-			if (box.BorderRadius.BottomLeft > 0)
+			if (div.BorderRadius.BottomLeft > 0)
 			{
-				var radius = box.BorderRadius.BottomLeft;
+				var radius = div.BorderRadius.BottomLeft;
 				point2 = new PointF(rectangle.X + radius, rectangle.Bottom);
 			}
 			else
@@ -239,9 +166,9 @@ namespace Coldsteel.UI
 			path.AddLine(point1, point2);
 
 			// Lower left corner.
-			if (box.BorderRadius.BottomLeft > 0)
+			if (div.BorderRadius.BottomLeft > 0)
 			{
-				var radius = box.BorderRadius.BottomLeft;
+				var radius = div.BorderRadius.BottomLeft;
 				var corner = new RectangleF(rectangle.X, rectangle.Bottom - 2 * radius, 2 * radius, 2 * radius);
 				path.AddArc(corner, 90, 90);
 				point1 = new PointF(rectangle.X, rectangle.Bottom - radius);
@@ -251,9 +178,9 @@ namespace Coldsteel.UI
 				point1 = new PointF(rectangle.X, rectangle.Bottom);
 			}
 
-			if (box.BorderRadius.TopLeft > 0)
+			if (div.BorderRadius.TopLeft > 0)
 			{
-				var radius = box.BorderRadius.TopLeft;
+				var radius = div.BorderRadius.TopLeft;
 				point2 = new PointF(rectangle.X, rectangle.Y + radius);
 			}
 			else
@@ -271,5 +198,16 @@ namespace Coldsteel.UI
 	{
 		internal static Color ToSys(this MGColor self) => Color.FromArgb(self.A, self.R, self.G, self.B);
 		internal static Rectangle ToSys(this MGRectangle self) => new Rectangle(self.X, self.Y, self.Width, self.Height);
+		internal static StringAlignment ToSys(this Align self)
+		{
+			switch (self)
+			{
+				case Align.Near: return StringAlignment.Near;
+				case Align.Far: return StringAlignment.Far;
+				case Align.Center:
+				default:
+					return StringAlignment.Center;
+			}
+		}
 	}
 }

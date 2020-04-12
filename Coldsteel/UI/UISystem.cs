@@ -41,6 +41,7 @@ namespace Coldsteel.UI
 		{
 			var list = GetViewsForScene(scene);
 			list.Add(view);
+			view.UpdateLayout(new Rectangle(Point.Zero, _engine.Config.ScreenDim));
 		}
 
 		internal void RemoveView(Scene scene, View view)
@@ -56,6 +57,16 @@ namespace Coldsteel.UI
 				: (_viewsByScene[scene] = new List<View>());
 		}
 
+		public override void Update(GameTime gameTime)
+		{
+			var scene = _engine.SceneManager.ActiveScene;
+			if (scene == null) return;
+			var views = GetViewsForScene(scene);
+			var bounds = new Rectangle(Point.Zero, _engine.Config.ScreenDim);
+			foreach (var view in views)
+				view.UpdateLayout(bounds);
+		}
+
 		public void Render()
 		{
 			var scene = _engine.SceneManager.ActiveScene;
@@ -66,7 +77,7 @@ namespace Coldsteel.UI
 			_spriteBatch.Begin(blendState: BlendState.NonPremultiplied);
 			foreach (var view in views)
 			{
-				_guiRenderer.Render(view.RenderTree, _bytes);
+				view.Render(_guiRenderer, _bytes);
 				_texture.SetData(_bytes, 0, _bytes.Length);
 				_spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
 			}

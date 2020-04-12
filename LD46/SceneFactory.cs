@@ -1,6 +1,4 @@
 ﻿using Coldsteel;
-using Coldsteel.UI;
-using Microsoft.Xna.Framework;
 using System;
 
 namespace LD46
@@ -28,7 +26,7 @@ namespace LD46
 			// TODO: add entities
 
 			var gui = Entity.New
-				.AddComponent(new View());
+				.AddComponent(Views.MainMenu);
 			scene.AddEntity(gui);
 
 			return scene;
