@@ -24,9 +24,10 @@ namespace Coldsteel.UI
 
 		public Color BackgroundColor { get; set; } = Color.Transparent;
 
-		public void Add(Element element)
+		public View AddElement(Element element)
 		{
 			_elements.Add(element);
+			return this;
 		}
 
 		private protected override void Activated()
@@ -47,7 +48,7 @@ namespace Coldsteel.UI
 
 		private static void HandleMouseClick(Point position, IElementCollection ec, MouseClickEventArgs e)
 		{
-			var element = ec.Elements.FirstOrDefault(e => e.Bounds.Contains(position));
+			var element = ec.Elements.FirstOrDefault(ev => ev.Bounds.Contains(position));
 			if (element == null) return;
 			if (element is Div div)
 			{

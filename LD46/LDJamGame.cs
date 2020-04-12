@@ -1,4 +1,5 @@
-﻿using Coldsteel;
+﻿using System;
+using Coldsteel;
 using Coldsteel.DevTools;
 using Microsoft.Xna.Framework;
 
@@ -32,16 +33,22 @@ namespace LD46
 				)
 			);
 
-			_engine.UseDevTools();
+			_engine.OpenDevTools();
 		}
 
 		protected override void Initialize()
 		{
 			base.Initialize();
 			_engine.LoadScene(
-				nameof(SceneFactory.MainMenuScene),
+				nameof(SceneFactory.DummySceneNotToBeUsedFroActualGame),
 				new LDJamGameState()
 			);
+		}
+
+		protected override void OnExiting(object sender, EventArgs args)
+		{
+			base.OnExiting(sender, args);
+			_engine.CloseDevTools();
 		}
 	}
 }

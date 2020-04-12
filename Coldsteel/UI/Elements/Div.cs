@@ -27,13 +27,13 @@ namespace Coldsteel.UI.Elements
 
 		public BorderRadius BorderRadius { get; set; } = default;
 
-		public Div Add(Element element)
+		public Div AddElement(Element element)
 		{
 			_elements.Add(element);
 			return this;
 		}
 
-		public Div Add(params Element[] elements)
+		public Div AddElement(params Element[] elements)
 		{
 			foreach (var element in elements)
 				_elements.Add(element);

@@ -112,5 +112,11 @@ namespace Coldsteel
 		}
 
 		public static Entity New => new Entity();
+
+		public Entity AddToScene(Scene scene)
+		{
+			scene.AddEntity(this);
+			return this;
+		}
 	}
 }

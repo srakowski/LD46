@@ -20,12 +20,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Content\Static\mainMenu.json" />
+    <ProjectReference Include="..\Coldsteel.DevTools\Coldsteel.DevTools.csproj" />
+    <ProjectReference Include="..\Coldsteel\Coldsteel.csproj" />    
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Coldsteel.DevTools\Coldsteel.DevTools.csproj" />
-    <ProjectReference Include="..\Coldsteel\Coldsteel.csproj" />    
+    <Folder Include="Content\Effect\" />
+    <Folder Include="Content\Song\" />
+    <Folder Include="Content\SoundEffect\" />
+    <Folder Include="Content\SpriteFont\" />
+    <Folder Include="Content\Texture2D\" />
   </ItemGroup>
 
 </Project>

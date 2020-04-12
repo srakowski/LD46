@@ -2,13 +2,13 @@
 // This file is subject to the terms and conditions defined in
 // file 'LICENSE.txt', which is part of this source code package.
 
-using Coldsteel.UI;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace Coldsteel
@@ -44,6 +44,30 @@ namespace Coldsteel
 			_assets.Add(asset);
 			if (_content != null)
 				asset.Load(_content);
+			return this;
+		}
+
+		public Scene AddAssetsFromDirectory(string rootDirectory)
+		{
+			AddAssetsFromDirectory<Texture2D>(rootDirectory);
+			AddAssetsFromDirectory<SpriteFont>(rootDirectory);
+			AddAssetsFromDirectory<SoundEffect>(rootDirectory);
+			AddAssetsFromDirectory<Song>(rootDirectory);
+			AddAssetsFromDirectory<Effect>(rootDirectory);
+			return this;
+		}
+
+		private Scene AddAssetsFromDirectory<T>(string rootDirectory)
+		{
+			var folder = typeof(T).Name;
+			var path = Path.Combine(rootDirectory, folder);
+			if (!Directory.Exists(path)) return this;
+			var files = Directory.GetFiles(path, "*.xnb");
+			foreach (var file in files)
+			{
+				var name = Path.GetFileNameWithoutExtension(file);
+				AddAsset(new Asset<T>($"{folder}/{name}"));
+			}
 			return this;
 		}
 
