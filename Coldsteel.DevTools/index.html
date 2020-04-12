@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coldsteel</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <div>
+      <form @submit.prevent="startGui">
+        <input type="text" v-model="guiName" />
+        <button type="submit">Create Gui</button>
+      </form>
+    </div>
+  </div>
+  <script>
+    const root = 'http://localhost:5000';
+
+    var app = new Vue({
+      el: '#app',
+      data: {
+        guiName: 'MyGui',
+      },
+      methods: {
+        startGui() {
+          fetch(`${root}/api/gui`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              name: this.guiName,
+            }),
+          })
+        },
+      },
+    });
+  </script>
+</body>
+</html>

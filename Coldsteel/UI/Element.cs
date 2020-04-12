@@ -66,8 +66,9 @@ namespace Coldsteel.UI
 		}
 	}
 
-	public interface IElementCollection : IEnumerable<Element>
+	public interface IElementCollection
 	{
+		IEnumerable<Element> Elements { get; }
 	}
 
 	public enum Anchor

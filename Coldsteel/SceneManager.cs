@@ -9,24 +9,22 @@ namespace Coldsteel
 	internal class SceneManager : GameComponent
 	{
 		private Scene _pendingScene;
-		private Scene _activeScene;
-
 		private readonly Engine _engine;
-
-		private readonly ISceneFactory _sceneFactory;
 
 		public SceneManager(Game game, Engine engine, ISceneFactory sceneFactory) : base(game)
 		{
 			_engine = engine;
-			_sceneFactory = sceneFactory;
+			SceneFactory = sceneFactory;
 			game.Components.Add(this);
 		}
 
-		public Scene ActiveScene => _activeScene;
+		public Scene ActiveScene { get; private set; }
+
+		public ISceneFactory SceneFactory { get; internal set; }
 
 		internal void LoadScene(string sceneName, GameState gameState)
 		{
-			var scene = _sceneFactory.Create(sceneName, gameState);
+			var scene = SceneFactory.Create(sceneName, gameState);
 			_pendingScene = scene;
 		}
 
@@ -34,9 +32,9 @@ namespace Coldsteel
 		{
 			if (_pendingScene == null) return;
 
-			_activeScene?.Deactivate();
+			ActiveScene?.Deactivate();
 			_pendingScene.Activate(_engine);
-			_activeScene = _pendingScene;
+			ActiveScene = _pendingScene;
 			_pendingScene = null;
 		}
 	}

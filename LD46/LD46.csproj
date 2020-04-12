@@ -20,11 +20,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Coldsteel\Coldsteel.csproj" />    
+    <None Remove="Content\Static\mainMenu.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Content\Static\" />
+    <ProjectReference Include="..\Coldsteel.DevTools\Coldsteel.DevTools.csproj" />
+    <ProjectReference Include="..\Coldsteel\Coldsteel.csproj" />    
   </ItemGroup>
 
 </Project>

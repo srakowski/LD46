@@ -65,6 +65,7 @@ namespace Coldsteel.UI
 			if (scene == null) return;
 			var views = GetViewsForScene(scene);
 			var topView = views.FirstOrDefault();
+			if (topView == null) return;
 
 			var mousePos = _engine.RenderingSystem.PointToScreen(InputManager.Mouse.CurrentState.Position);
 

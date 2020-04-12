@@ -2,12 +2,14 @@
 // This file is subject to the terms and conditions defined in
 // file 'LICENSE.txt', which is part of this source code package.
 
+using Coldsteel.UI;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Coldsteel
 {
@@ -22,6 +24,8 @@ namespace Coldsteel
 		private Engine _engine;
 
 		private ContentManager _content;
+
+		public Guid Id { get; } = Guid.NewGuid();
 
 		public IEnumerable<Entity> Entities => _entities;
 
@@ -109,5 +113,23 @@ namespace Coldsteel
 				Depth = depth
 			}
 		);
+
+		internal Component FindComponentById(Guid id)
+		{
+			return FindComponentById(_entities, id);
+		}
+
+		private static Component FindComponentById(IEnumerable<Entity> entities, Guid id)
+		{
+			if (!entities.Any()) return null;
+
+			var c = entities
+				.SelectMany(e => e.Components)
+				.FirstOrDefault(e => e.Id == id);
+
+			if (c != null) return c;
+
+			return FindComponentById(entities.SelectMany(e => e.Children), id);
+		}
 	}
 }

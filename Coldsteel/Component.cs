@@ -2,6 +2,8 @@
 // This file is subject to the terms and conditions defined in
 // file 'LICENSE.txt', which is part of this source code package.
 
+using System;
+
 namespace Coldsteel
 {
 	public abstract class Component
@@ -9,6 +11,10 @@ namespace Coldsteel
 		private protected Engine Engine { get; private set; }
 
 		protected Scene Scene { get; private set; }
+
+		public Guid Id { get; } = Guid.NewGuid();
+
+		public string Name { get; set; }
 
 		internal protected Entity Entity { get; private set; }
 

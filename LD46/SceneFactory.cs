@@ -29,51 +29,54 @@ namespace LD46
 
 			// TODO: add entities
 
-			int i = 0;
+			//int i = 0;
 
-			var buttonText = Text.New
-				.Configure(text =>
-				{
-					text.Value = "Hello World!";
-					text.Size = 36;
-					text.Dock = Dock.Fill;
-					text.Align = Align.Center;
-					text.VerticalAlign = Align.Center;
-					text.Color = new Color(89, 94, 108);
-				});
+			//var buttonText = Text.New
+			//	.Configure(text =>
+			//	{
+			//		text.Value = "Hello World!";
+			//		text.Size = 36;
+			//		text.Dock = Dock.Fill;
+			//		text.Align = Align.Center;
+			//		text.VerticalAlign = Align.Center;
+			//		text.Color = new Color(89, 94, 108);
+			//	});
 
-			var image = Image.New
-				.Configure(img =>
-				{
-					img.Source = "./Content/Static/dummy.png";
-				});
+			//var image = Image.New
+			//	.Configure(img =>
+			//	{
+			//		img.Source = "./Content/Static/dummy.png";
+			//	});
+
+			//var gui = Entity.New
+			//	.AddComponent(new View
+			//	{
+			//		Div.New
+			//			.Configure(div =>
+			//			{
+			//				div.OnMouseClick += (s, e) =>
+			//				{
+			//					i++;
+			//					buttonText.Value = $"Clicked {i}";
+			//				};
+
+			//				div.Anchor = Anchor.Center;
+			//				div.BackgroundColor = Color.White;
+			//				div.BorderRadius = 8;
+			//				div.BorderColor = new Color(204, 207, 217);
+			//				div.Origin = Anchor.Center;
+			//				div.Height = 409;
+			//				div.Width = 630;
+			//				div.BorderWidth = 1;
+			//			})
+			//			.Add(
+			//				buttonText,
+			//				image
+			//			),
+			//	});
 
 			var gui = Entity.New
-				.AddComponent(new View
-				{
-					Div.New
-						.Configure(div =>
-						{
-							div.OnMouseClick += (s, e) =>
-							{
-								i++;
-								buttonText.Value = $"Clicked {i}";
-							};
-
-							div.Anchor = Anchor.Center;
-							div.BackgroundColor = Color.White;
-							div.BorderRadius = 8;
-							div.BorderColor = new Color(204, 207, 217);
-							div.Origin = Anchor.Center;
-							div.Height = 409;
-							div.Width = 630;
-							div.BorderWidth = 1;
-						})
-						.Add(
-							buttonText,
-							image
-						),
-				});
+				.AddComponent(View.FromFile("./Content/Static/mainMenu.json"));
 
 			scene.AddEntity(gui);
 

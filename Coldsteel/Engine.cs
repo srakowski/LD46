@@ -6,6 +6,8 @@ using Coldsteel.UI;
 using Microsoft.Xna.Framework;
 using System.Runtime.CompilerServices;
 
+[assembly:InternalsVisibleTo("Coldsteel.DevTools")]
+
 namespace Coldsteel
 {
 	public class Engine : GameComponent

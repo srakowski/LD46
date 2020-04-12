@@ -14,11 +14,15 @@ namespace Coldsteel
 
 		private readonly List<Entity> _children = new List<Entity>();
 
+		public IEnumerable<Entity> Children => _children;
+
 		private Engine _engine;
 
 		private Scene _scene;
 
 		private Entity _parent;
+
+		public Guid Id { get; } = Guid.NewGuid();
 
 		public Vector2 Position;
 

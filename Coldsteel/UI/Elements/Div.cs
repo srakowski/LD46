@@ -4,14 +4,20 @@
 
 using Microsoft.Xna.Framework;
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Coldsteel.UI.Elements
 {
 	public class Div : Element, IElementCollection
 	{
-		private readonly ICollection<Element> _elements = new List<Element>();
+		private List<Element> _elements = new List<Element>();
+
+		public IEnumerable<Element> Elements
+		{
+			get => _elements;
+			set => _elements = value.ToList();
+		}
 
 		public Color BackgroundColor { get; set; } = Color.Transparent;
 
@@ -33,10 +39,6 @@ namespace Coldsteel.UI.Elements
 				_elements.Add(element);
 			return this;
 		}
-
-		public IEnumerator<Element> GetEnumerator() => _elements.GetEnumerator();
-
-		IEnumerator IEnumerable.GetEnumerator() => _elements.GetEnumerator();
 
 		public static Div New => new Div();
 

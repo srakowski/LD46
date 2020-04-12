@@ -5,15 +5,22 @@
 using Coldsteel.UI.Elements;
 using Microsoft.Xna.Framework;
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text.Json;
 
 namespace Coldsteel.UI
 {
 	public class View : Component, IElementCollection
 	{
-		private readonly ICollection<Element> _elements = new List<Element>();
+		private List<Element> _elements = new List<Element>();
+
+		public IEnumerable<Element> Elements
+		{
+			get => _elements;
+			set => _elements = value.ToList();
+		}
 
 		public Color BackgroundColor { get; set; } = Color.Transparent;
 
@@ -38,9 +45,9 @@ namespace Coldsteel.UI
 			HandleMouseClick(position, this, eventArgs);
 		}
 
-		private static void HandleMouseClick(Point position, IElementCollection elements, MouseClickEventArgs e)
+		private static void HandleMouseClick(Point position, IElementCollection ec, MouseClickEventArgs e)
 		{
-			var element = elements.FirstOrDefault(e => e.Bounds.Contains(position));
+			var element = ec.Elements.FirstOrDefault(e => e.Bounds.Contains(position));
 			if (element == null) return;
 			if (element is Div div)
 			{
@@ -58,9 +65,9 @@ namespace Coldsteel.UI
 			HandleMouseMovement(this, eventArgs);
 		}
 
-		private static void HandleMouseMovement(IElementCollection elements, MouseMovementEventArgs e)
+		private static void HandleMouseMovement(IElementCollection elementCollection, MouseMovementEventArgs e)
 		{
-			foreach (var element in elements)
+			foreach (var element in elementCollection.Elements)
 			{
 				if (element is Div div)
 				{
@@ -75,7 +82,7 @@ namespace Coldsteel.UI
 		private static void UpdateLayout(Rectangle bounds, IElementCollection elementCollection)
 		{
 			var anchorPoints = new AnchorPoints(bounds);
-			foreach (var element in elementCollection)
+			foreach (var element in elementCollection.Elements)
 			{
 				element.UpdateBounds(bounds, anchorPoints);
 				if (element is IElementCollection ec)
@@ -94,7 +101,7 @@ namespace Coldsteel.UI
 
 		private static void Render(GuiRenderer guiRenderer, IElementCollection elementCollection)
 		{
-			foreach (var element in elementCollection)
+			foreach (var element in elementCollection.Elements)
 			{
 				if (element is Elements.Text t)
 				{
@@ -116,8 +123,18 @@ namespace Coldsteel.UI
 			}
 		}
 
-		public IEnumerator<Element> GetEnumerator() => _elements.GetEnumerator();
+		public static View FromFile(string path)
+		{
+			var options = new JsonSerializerOptions
+			{
+				PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+				WriteIndented = true
+			};
 
-		IEnumerator IEnumerable.GetEnumerator() => _elements.GetEnumerator();
+			var data = File.ReadAllText(path);
+			var view = JsonSerializer.Deserialize<View>(data, options);
+
+			return view;
+		}
 	}
 }
