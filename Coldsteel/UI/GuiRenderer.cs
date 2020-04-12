@@ -4,11 +4,14 @@
 
 using Coldsteel.UI.Elements;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Drawing.Text;
 using System.Runtime.InteropServices;
+using CSImage = Coldsteel.UI.Elements.Image;
+using Image = System.Drawing.Image;
 using MGColor = Microsoft.Xna.Framework.Color;
 using MGRectangle = Microsoft.Xna.Framework.Rectangle;
 
@@ -18,6 +21,7 @@ namespace Coldsteel.UI
 	{
 		private Bitmap _image;
 		private Graphics _graphics;
+		private readonly Dictionary<string, Image> _loadedImages = new Dictionary<string, Image>();
 
 		public GuiRenderer(int width, int height)
 		{
@@ -86,6 +90,16 @@ namespace Coldsteel.UI
 						_graphics.DrawPath(pen, path);
 				}
 			}
+		}
+
+		internal void RenderImage(CSImage image)
+		{
+			if (!_loadedImages.TryGetValue(image.Source, out var img))
+			{
+				img = Image.FromFile(image.Source);
+				_loadedImages[image.Source] = img;
+			}
+			_graphics.DrawImage(img, image.Bounds.ToSys());
 		}
 
 		// Adapted from: http://csharphelper.com/blog/2016/01/draw-rounded-rectangles-in-c/

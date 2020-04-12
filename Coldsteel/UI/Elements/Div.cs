@@ -45,6 +45,32 @@ namespace Coldsteel.UI.Elements
 			configure(this);
 			return this;
 		}
+
+		public event EventHandler<MouseClickEventArgs> OnMouseClick;
+		internal void MouseClick(MouseClickEventArgs e) => OnMouseClick?.Invoke(this, e);
+
+		internal bool HadMouse = false;
+		public event EventHandler<MouseMovementEventArgs> OnMouseEnter;
+		public event EventHandler<MouseMovementEventArgs> OnMouseHover;
+		public event EventHandler<MouseMovementEventArgs> OnMouseLeave;
+
+		internal void HandleMouseMove(MouseMovementEventArgs e)
+		{
+			if (Bounds.Contains(e.Position))
+			{
+				if (!HadMouse)
+				{
+					OnMouseEnter?.Invoke(this, e);
+				}
+				OnMouseHover?.Invoke(this, e);
+				HadMouse = true;
+			}
+			else if (HadMouse)
+			{
+				OnMouseLeave?.Invoke(this, e);
+				HadMouse = false;
+			}
+		}
 	}
 
 	public struct BorderRadius

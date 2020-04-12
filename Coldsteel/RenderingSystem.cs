@@ -23,6 +23,11 @@ namespace Coldsteel
 			game.Components.Add(this);
 		}
 
+		public Point PointToScreen(Point point)
+		{
+			return _vpa.PointToScreen(point);
+		}
+
 		public override void Initialize()
 		{
 			base.Initialize();

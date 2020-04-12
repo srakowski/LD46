@@ -2,9 +2,12 @@
 // This file is subject to the terms and conditions defined in
 // file 'LICENSE.txt', which is part of this source code package.
 
+using Coldsteel.UI.Elements;
 using Microsoft.Xna.Framework;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Coldsteel.UI
 {
@@ -25,6 +28,44 @@ namespace Coldsteel.UI
 		private protected override void Deactivated()
 		{
 			Engine.UISystem.RemoveView(Scene, this);
+		}
+
+		internal void HandleMouseClick(Point position)
+		{
+			var eventArgs = new MouseClickEventArgs(position);
+			HandleMouseClick(position, this, eventArgs);
+		}
+
+		private static void HandleMouseClick(Point position, IElementCollection elements, MouseClickEventArgs e)
+		{
+			var element = elements.FirstOrDefault(e => e.Bounds.Contains(position));
+			if (element == null) return;
+			if (element is Div div)
+			{
+				HandleMouseClick(position, div, e);
+				if (!e.Handled)
+				{
+					div.MouseClick(e);
+				}
+			}
+		}
+
+		internal void HandleMouseMovement(Point position)
+		{
+			var eventArgs = new MouseMovementEventArgs(position);
+			HandleMouseMovement(this, eventArgs);
+		}
+
+		private static void HandleMouseMovement(IElementCollection elements, MouseMovementEventArgs e)
+		{
+			foreach (var element in elements)
+			{
+				if (element is Div div)
+				{
+					HandleMouseMovement(div, e);
+					div.HandleMouseMove(e);
+				}
+			}
 		}
 
 		internal void UpdateLayout(Rectangle bounds) => UpdateLayout(bounds, this);
@@ -61,6 +102,14 @@ namespace Coldsteel.UI
 				{
 					guiRenderer.RenderDiv(d);
 					Render(guiRenderer, d);
+				}
+				else  if (element is Elements.Image i)
+				{
+					guiRenderer.RenderImage(i);
+				}
+				else
+				{
+					throw new NotImplementedException();
 				}
 			}
 		}

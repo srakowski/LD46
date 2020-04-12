@@ -4,7 +4,9 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Coldsteel.UI
 {
@@ -62,9 +64,20 @@ namespace Coldsteel.UI
 			var scene = _engine.SceneManager.ActiveScene;
 			if (scene == null) return;
 			var views = GetViewsForScene(scene);
+			var topView = views.FirstOrDefault();
+
+			var mousePos = _engine.RenderingSystem.PointToScreen(InputManager.Mouse.CurrentState.Position);
+
+			topView.HandleMouseMovement(mousePos);
+
+			if (InputManager.Mouse.CurrentState.LeftButton == ButtonState.Released &&
+				InputManager.Mouse.PreviousState.LeftButton == ButtonState.Pressed)
+			{
+				topView.HandleMouseClick(mousePos);
+			}
+
 			var bounds = new Rectangle(Point.Zero, _engine.Config.ScreenDim);
-			foreach (var view in views)
-				view.UpdateLayout(bounds);
+			topView.UpdateLayout(bounds);
 		}
 
 		public void Render()

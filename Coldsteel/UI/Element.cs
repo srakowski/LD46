@@ -14,6 +14,8 @@ namespace Coldsteel.UI
 
 		public Dock Dock { get; set; } = Dock.None;
 
+		public Anchor Origin { get; set; } = Anchor.TopLeft;
+
 		public Point Offset { get; set; } = Point.Zero;
 
 		public int Width { get; set; } = 100;
@@ -24,7 +26,7 @@ namespace Coldsteel.UI
 
 		internal void UpdateBounds(Rectangle containerBounds, AnchorPoints anchorPoints)
 		{
-			var location = anchorPoints.GetAnchorPoint(Anchor) + Offset;
+			var location = anchorPoints.GetAnchorPoint(Anchor);
 			var size = new Point(Width, Height);
 			switch (Dock)
 			{
@@ -55,6 +57,11 @@ namespace Coldsteel.UI
 					size.X = containerBounds.Width;
 					break;
 			}
+
+			var originPoints = new AnchorPoints(new Rectangle(Point.Zero, size));
+			var origin = originPoints.GetAnchorPoint(Origin);
+
+			location = (location - origin) + Offset;
 			Bounds = new Rectangle(location, size);
 		}
 	}

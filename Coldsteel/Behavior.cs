@@ -4,6 +4,7 @@
 
 using Coldsteel.Controls;
 using Microsoft.Xna.Framework;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -43,7 +44,7 @@ namespace Coldsteel
 
 		protected virtual void Update() { }
 
-		protected TControl GetControl<TControl>(string name) where TControl : Control
+		public TControl GetControl<TControl>(string name) where TControl : Control
 		{
 			if (!Engine.Config.Controls.ContainsKey(name))
 				throw new System.Exception($"control not defined: {name}");
