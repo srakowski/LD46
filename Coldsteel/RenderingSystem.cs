@@ -4,11 +4,17 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Coldsteel
 {
 	internal class RenderingSystem : DrawableGameComponent
 	{
+		private readonly Dictionary<Scene, List<Camera>> _camerasByScene = new Dictionary<Scene, List<Camera>>();
+
+		private readonly Dictionary<Scene, List<ISprite>> _spritesByScene = new Dictionary<Scene, List<ISprite>>();
+
 		private readonly Engine _engine;
 
 		private ViewportAdapter _vpa;
@@ -43,7 +49,22 @@ namespace Coldsteel
 			GraphicsDevice.SetRenderTarget(_renderTarget);
 			GraphicsDevice.Clear(Color.CornflowerBlue);
 
-			_engine.SpriteSystem.Render();
+			var scene = _engine.SceneManager.ActiveScene;
+			if (scene != null)
+			{
+				var sprites = GetSpriteListForScene(scene);
+				var camera = GetCameraListForScene(scene).FirstOrDefault(c => c.Enabled);
+
+				foreach (var spriteLayer in scene.SpriteLayers.OrderBy(s => s.Depth))
+				{
+					var spritesThisLayer = sprites
+						.Concat(_engine.ParticleSystem.Particles.Cast<ISprite>())
+						.Where(s => s.Enabled && s.SpriteLayerName == spriteLayer.Name);
+						
+					spriteLayer.Draw(_spriteBatch, camera, spritesThisLayer);
+				}
+			}
+
 			_engine.UISystem.Render();
 
 			GraphicsDevice.SetRenderTarget(null);
@@ -53,6 +74,44 @@ namespace Coldsteel
 			_spriteBatch.Begin(transformMatrix: _vpa.GetScaleMatrix());
 			_spriteBatch.Draw(_renderTarget, Vector2.Zero, Color.White);
 			_spriteBatch.End();
+		}
+
+		internal void AddSprite(Scene scene, ISprite sprite)
+		{
+			var spriteList = GetSpriteListForScene(scene);
+			spriteList.Add(sprite);
+		}
+
+		internal void RemoveSprite(Scene scene, ISprite sprite)
+		{
+			var spriteList = GetSpriteListForScene(scene);
+			spriteList.Remove(sprite);
+		}
+
+		private List<ISprite> GetSpriteListForScene(Scene scene)
+		{
+			return _spritesByScene.ContainsKey(scene)
+				? _spritesByScene[scene]
+				: (_spritesByScene[scene] = new List<ISprite>());
+		}
+
+		internal void AddCamera(Scene scene, Camera camera)
+		{
+			var cameraList = GetCameraListForScene(scene);
+			cameraList.Add(camera);
+		}
+
+		internal void RemoveCamera(Scene scene, Camera camera)
+		{
+			var cameraList = GetCameraListForScene(scene);
+			cameraList.Remove(camera);
+		}
+
+		private List<Camera> GetCameraListForScene(Scene scene)
+		{
+			return _camerasByScene.ContainsKey(scene)
+				? _camerasByScene[scene]
+				: (_camerasByScene[scene] = new List<Camera>());
 		}
 	}
 }

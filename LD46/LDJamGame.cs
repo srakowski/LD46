@@ -1,6 +1,5 @@
 ﻿using System;
 using Coldsteel;
-using Coldsteel.DevTools;
 using Microsoft.Xna.Framework;
 
 namespace LD46
@@ -32,8 +31,6 @@ namespace LD46
 					new Point(1280, 1024)
 				)
 			);
-
-			_engine.OpenDevTools();
 		}
 
 		protected override void Initialize()
@@ -48,7 +45,6 @@ namespace LD46
 		protected override void OnExiting(object sender, EventArgs args)
 		{
 			base.OnExiting(sender, args);
-			_engine.CloseDevTools();
 		}
 	}
 }

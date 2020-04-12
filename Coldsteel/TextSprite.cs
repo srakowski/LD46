@@ -45,14 +45,14 @@ namespace Coldsteel
 
 		private protected override void Activated()
 		{
-			Engine.SpriteSystem.AddSprite(Scene, this);
+			Engine.RenderingSystem.AddSprite(Scene, this);
 			_spriteFont = Scene.Assets.FirstOrDefault(a => a.Name == AssetName) as Asset<SpriteFont>;
 		}
 
 		private protected override void Deactivated()
 		{
 			_spriteFont = null;
-			Engine.SpriteSystem.RemoveSprite(Scene, this);
+			Engine.RenderingSystem.RemoveSprite(Scene, this);
 		}
 
 		internal void Draw(SpriteBatch spriteBatch)

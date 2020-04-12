@@ -42,14 +42,14 @@ namespace Coldsteel
 
 		private protected override void Activated()
 		{
-			Engine.SpriteSystem.AddSprite(Scene, this);
+			Engine.RenderingSystem.AddSprite(Scene, this);
 			_texture = Scene.Assets.FirstOrDefault(a => a.Name == AssetName) as Asset<Texture2D>;
 		}
 
 		private protected override void Deactivated()
 		{
 			_texture = null;
-			Engine.SpriteSystem.RemoveSprite(Scene, this);
+			Engine.RenderingSystem.RemoveSprite(Scene, this);
 		}
 
 		internal void Draw(SpriteBatch spriteBatch)

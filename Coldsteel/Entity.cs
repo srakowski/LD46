@@ -26,6 +26,12 @@ namespace Coldsteel
 
 		public Vector2 Position;
 
+		public Entity SetPosition(Vector2 position)
+		{
+			Position = position;
+			return this;
+		}
+
 		public Vector2 GlobalPosition => Vector2.Transform(Position, _parent?.TransformMatrix ?? Matrix.Identity);
 
 		public float Rotation;

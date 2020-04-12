@@ -25,12 +25,12 @@ namespace Coldsteel
 
 		private protected override void Activated()
 		{
-			Engine.SpriteSystem.AddCamera(Scene, this);
+			Engine.RenderingSystem.AddCamera(Scene, this);
 		}
 
 		private protected override void Deactivated()
 		{
-			Engine.SpriteSystem.RemoveCamera(Scene, this);
+			Engine.RenderingSystem.RemoveCamera(Scene, this);
 		}
 	}
 }

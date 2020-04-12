@@ -2,11 +2,13 @@
 // This file is subject to the terms and conditions defined in
 // file 'LICENSE.txt', which is part of this source code package.
 
+using Coldsteel.Particles;
 using Coldsteel.UI;
 using Microsoft.Xna.Framework;
 using System.Runtime.CompilerServices;
 
 [assembly:InternalsVisibleTo("Coldsteel.DevTools")]
+[assembly:InternalsVisibleTo("Coldsteel.ParticleTool")]
 
 namespace Coldsteel
 {
@@ -21,7 +23,7 @@ namespace Coldsteel
 			InputManager = new InputManager(game, this);
 			BehaviorSystem = new BehaviorSystem(game, this);
 			CollisionSystem = new CollisionSystem(game, this);
-			SpriteSystem = new SpriteSystem(game, this);
+			ParticleSystem = new ParticleSystem(game, this);
 			UISystem = new UISystem(game, this);
 			RenderingSystem = new RenderingSystem(game, this);
 		}
@@ -36,7 +38,7 @@ namespace Coldsteel
 
 		internal CollisionSystem CollisionSystem;
 
-		internal SpriteSystem SpriteSystem;
+		internal ParticleSystem ParticleSystem;
 
 		internal UISystem UISystem;
 
