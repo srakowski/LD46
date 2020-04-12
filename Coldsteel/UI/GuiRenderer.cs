@@ -40,9 +40,9 @@ namespace Coldsteel.UI
 			_image.Dispose();
 		}
 
-		public void Clear()
+		public void Clear(MGColor color)
 		{
-			_graphics.Clear(Color.Transparent);
+			_graphics.Clear(color.ToSys());
 		}
 
 		internal void Export(byte[] data)

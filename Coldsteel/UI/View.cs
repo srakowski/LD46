@@ -15,6 +15,8 @@ namespace Coldsteel.UI
 	{
 		private readonly ICollection<Element> _elements = new List<Element>();
 
+		public Color BackgroundColor { get; set; } = Color.Transparent;
+
 		public void Add(Element element)
 		{
 			_elements.Add(element);
@@ -85,7 +87,7 @@ namespace Coldsteel.UI
 
 		internal void Render(GuiRenderer guiRenderer, byte[] bytes)
 		{
-			guiRenderer.Clear();
+			guiRenderer.Clear(BackgroundColor);
 			Render(guiRenderer, this);
 			guiRenderer.Export(bytes);
 		}

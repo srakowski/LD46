@@ -27,7 +27,7 @@ namespace LD46
 				new EngineConfig(
 					new SceneFactory(),
 					Controls.Create(),
-					new Point(1024, 768)
+					new Point(1280, 1024)
 				)
 			);
 		}
