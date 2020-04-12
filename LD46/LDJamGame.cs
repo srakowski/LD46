@@ -37,7 +37,7 @@ namespace LD46
 		{
 			base.Initialize();
 			_engine.LoadScene(
-				nameof(SceneFactory.DummySceneNotToBeUsedFroActualGame),
+				nameof(SceneFactory.DummySceneNotToBeUsedForActualGame),
 				new LDJamGameState()
 			);
 		}

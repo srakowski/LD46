@@ -3,7 +3,6 @@
 // file 'LICENSE.txt', which is part of this source code package.
 
 using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
 
 namespace Coldsteel.Particles
@@ -16,11 +15,8 @@ namespace Coldsteel.Particles
 
 		private int _particleIndex = 0;
 
-		private readonly Engine _engine;
-
 		public ParticleSystem(Game game, Engine engine) : base(game)
 		{
-			_engine = engine;
 			game.Components.Add(this);
 		}
 

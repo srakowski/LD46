@@ -12,13 +12,13 @@ namespace LD46
 		{
 			switch (sceneName)
 			{
-				case nameof(DummySceneNotToBeUsedFroActualGame): return DummySceneNotToBeUsedFroActualGame(gameState as LDJamGameState);
+				case nameof(DummySceneNotToBeUsedForActualGame): return DummySceneNotToBeUsedForActualGame(gameState as LDJamGameState);
 				case nameof(GameplayScene): return GameplayScene(gameState as LDJamGameState);
 				default: throw new NotImplementedException("TODO");
 			}
 		}
 
-		public Scene DummySceneNotToBeUsedFroActualGame(LDJamGameState gameState)
+		public Scene DummySceneNotToBeUsedForActualGame(LDJamGameState gameState)
 		{
 			var scene = new Scene();
 			scene.AddAssetsFromDirectory(@"./Content");
@@ -73,9 +73,6 @@ namespace LD46
 							image
 						)
 				));
-
-			//var gui = Entity.New
-			//	.AddComponent(View.FromFile("./Content/Static/mainMenu.json"));
 
 			scene.AddEntity(gui);
 

@@ -5,10 +5,6 @@
 using Coldsteel.Particles;
 using Coldsteel.UI;
 using Microsoft.Xna.Framework;
-using System.Runtime.CompilerServices;
-
-[assembly:InternalsVisibleTo("Coldsteel.DevTools")]
-[assembly:InternalsVisibleTo("Coldsteel.ParticleTool")]
 
 namespace Coldsteel
 {

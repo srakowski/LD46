@@ -6,9 +6,7 @@ using Coldsteel.UI.Elements;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text.Json;
 
 namespace Coldsteel.UI
 {
@@ -122,20 +120,6 @@ namespace Coldsteel.UI
 					throw new NotImplementedException();
 				}
 			}
-		}
-
-		public static View FromFile(string path)
-		{
-			var options = new JsonSerializerOptions
-			{
-				PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-				WriteIndented = true
-			};
-
-			var data = File.ReadAllText(path);
-			var view = JsonSerializer.Deserialize<View>(data, options);
-
-			return view;
 		}
 	}
 }

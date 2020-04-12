@@ -101,7 +101,7 @@ namespace Coldsteel
 			return AddComponent(sprite);
 		}
 
-		public Entity AddTextSprite(string assetName, string text, string spriteLayer) => AddComponent(new TextSprite(assetName, text , spriteLayer));
+		public Entity AddTextSprite(string assetName, string text, string spriteLayer) => AddComponent(new TextSprite(assetName, text, spriteLayer));
 		public Entity AddTextSprite(string assetName, string text, string spriteLayer, Action<TextSprite> configure)
 		{
 			var sprite = new TextSprite(assetName, text, spriteLayer);
