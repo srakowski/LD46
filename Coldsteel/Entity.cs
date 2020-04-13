@@ -32,6 +32,8 @@ namespace Coldsteel
 			return this;
 		}
 
+		public Entity SetPosition(float x, float y) => SetPosition(new Vector2(x, y));
+
 		public Vector2 GlobalPosition => Vector2.Transform(Position, _parent?.TransformMatrix ?? Matrix.Identity);
 
 		public float Rotation;
@@ -57,7 +59,6 @@ namespace Coldsteel
 				component.Activate(_engine, _scene, this);
 			return this;
 		}
-
 
 		public Entity AddChild(Entity entity)
 		{
@@ -93,10 +94,10 @@ namespace Coldsteel
 			_engine = null;
 		}
 
-		public Entity AddSprite(string assetName, string spriteLayer) => AddComponent(new Sprite(assetName, spriteLayer));
-		public Entity AddSprite(string assetName, string spriteLayer, Action<Sprite> configure)
+		public Entity AddSprite(string assetName, string spriteLayer, Size? frameSize = null) => AddComponent(new Sprite(assetName, spriteLayer, frameSize));
+		public Entity AddSprite(string assetName, string spriteLayer, Size? frameSize, Action<Sprite> configure)
 		{
-			var sprite = new Sprite(assetName, spriteLayer);
+			var sprite = new Sprite(assetName, spriteLayer, frameSize);
 			configure(sprite);
 			return AddComponent(sprite);
 		}

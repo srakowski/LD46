@@ -38,14 +38,14 @@ namespace Coldsteel.Particles
 	
 		private protected override void Activated()
 		{
-			Engine.ParticleSystem.AddEmitter(Scene, this);
+			Engine.ParticleSystem.AddComponent(Scene, this);
 			_texture = Scene.Assets.FirstOrDefault(a => a.Name == AssetName) as Asset<Texture2D>;
 		}
 
 		private protected override void Deactivated()
 		{
 			_texture = null;
-			Engine.ParticleSystem.RemoveEmitter(Scene, this);
+			Engine.ParticleSystem.RemoveComponent(Scene, this);
 		}
 
 		public void Emit(int count)

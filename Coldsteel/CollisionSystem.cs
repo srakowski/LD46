@@ -4,48 +4,20 @@
 
 using Microsoft.Xna.Framework;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Coldsteel
 {
-	internal class CollisionSystem : GameComponent
+	internal class CollisionSystem : SystemBase<Collider>
 	{
-		private readonly Dictionary<Scene, List<Collider>> _collidersByScene = new Dictionary<Scene, List<Collider>>();
-
-		private readonly Engine _engine;
-
-		public CollisionSystem(Game game, Engine engine) : base(game)
+		public CollisionSystem(Game game, Engine engine) : base(game, engine)
 		{
-			game.Components.Add(this);
-			_engine = engine;
-		}
-
-		internal void AddCollider(Scene scene, Collider collider)
-		{
-			var colliderList = GetCollidersForScene(scene);
-			colliderList.Add(collider);
-		}
-
-		internal void RemoveCollider(Scene scene, Collider collider)
-		{
-			var colliderList = GetCollidersForScene(scene);
-			colliderList.Remove(collider);
-		}
-
-		private List<Collider> GetCollidersForScene(Scene scene)
-		{
-			return _collidersByScene.ContainsKey(scene)
-				? _collidersByScene[scene]
-				: (_collidersByScene[scene] = new List<Collider>());
 		}
 
 		public override void Update(GameTime gameTime)
 		{
-			var scene = _engine.SceneManager.ActiveScene;
-			if (scene == null) return;
-
-			var colliders = GetCollidersForScene(scene);
+			var colliders = ActiveComponents;
+			if (colliders == null) return;
 			if (!colliders.Any()) return;
 
 			var collidersThisFrame = colliders.ToArray();

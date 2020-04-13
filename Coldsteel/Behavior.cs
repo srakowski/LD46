@@ -22,13 +22,13 @@ namespace Coldsteel
 
 		private protected override void Activated()
 		{
-			Engine.BehaviorSystem.AddBehavior(Scene, this);
+			Engine.BehaviorSystem.AddComponent(Scene, this);
 			Initialize();
 		}
 
 		private protected override void Deactivated()
 		{
-			Engine.BehaviorSystem.RemoveBehavior(Scene, this);
+			Engine.BehaviorSystem.RemoveComponent(Scene, this);
 		}
 
 		internal void Update(GameTime gameTime)

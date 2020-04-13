@@ -27,12 +27,12 @@ namespace Coldsteel
 
 		private protected override void Activated()
 		{
-			Engine.CollisionSystem.AddCollider(Scene, this);
+			Engine.CollisionSystem.AddComponent(Scene, this);
 		}
 
 		private protected override void Deactivated()
 		{
-			Engine.CollisionSystem.RemoveCollider(Scene, this);
+			Engine.CollisionSystem.RemoveComponent(Scene, this);
 		}
 	}
 }

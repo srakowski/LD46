@@ -1,4 +1,5 @@
 ﻿using Coldsteel;
+using Coldsteel.Animations;
 using Coldsteel.UI;
 using Coldsteel.UI.Elements;
 using Microsoft.Xna.Framework;
@@ -25,9 +26,21 @@ namespace LD46
 
 			scene.AddSpriteLayers();
 
-			var e = Entity.New
+			Entity.New
 				.AddToScene(scene)
 				.AddSprite("Texture2D/dummy", SpriteLayers.Default);
+
+			var sprite = new Sprite("Texture2D/dummy", SpriteLayers.Default, new Size(50, 50));
+			var animator = new SpriteAnimator(sprite)
+				.AddSpriteAnimation("cycle", (0, 300), (1, 400), (2, 500), (3, 100))
+				.AddSpriteAnimation("to", (0, 200), (1, 200))
+				.AddSpriteAnimation("do", (2, 300), (3, 300));
+
+			Entity.New
+				.AddToScene(scene)
+				.SetPosition(200, 0)
+				.AddComponent(sprite)
+				.AddComponent(animator);
 
 			int i = 0;
 
@@ -57,6 +70,11 @@ namespace LD46
 							{
 								i++;
 								buttonText.Value = $"Clicked {i}";
+								animator.Animate(
+									animator.CurrentAnimationName == "do"
+										? "to"
+										: "do"
+								);
 							};
 
 							div.Anchor = Anchor.Center;

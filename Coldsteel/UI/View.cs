@@ -30,12 +30,12 @@ namespace Coldsteel.UI
 
 		private protected override void Activated()
 		{
-			Engine.UISystem.AddView(Scene, this);
+			Engine.UISystem.AddComponent(Scene, this);
 		}
 
 		private protected override void Deactivated()
 		{
-			Engine.UISystem.RemoveView(Scene, this);
+			Engine.UISystem.RemoveComponent(Scene, this);
 		}
 
 		internal void HandleMouseClick(Point position)

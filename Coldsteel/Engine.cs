@@ -2,6 +2,7 @@
 // This file is subject to the terms and conditions defined in
 // file 'LICENSE.txt', which is part of this source code package.
 
+using Coldsteel.Animations;
 using Coldsteel.Particles;
 using Coldsteel.UI;
 using Microsoft.Xna.Framework;
@@ -21,24 +22,19 @@ namespace Coldsteel
 			CollisionSystem = new CollisionSystem(game, this);
 			ParticleSystem = new ParticleSystem(game, this);
 			UISystem = new UISystem(game, this);
+			AnimationSystem = new AnimationSystem(game, this);
 			RenderingSystem = new RenderingSystem(game, this);
 		}
 
-		internal EngineConfig Config;
-
-		internal SceneManager SceneManager;
-
-		internal InputManager InputManager;
-
-		internal BehaviorSystem BehaviorSystem;
-
-		internal CollisionSystem CollisionSystem;
-
-		internal ParticleSystem ParticleSystem;
-
-		internal UISystem UISystem;
-
-		internal RenderingSystem RenderingSystem;
+		internal readonly EngineConfig Config;
+		internal readonly SceneManager SceneManager;
+		internal readonly InputManager InputManager;
+		internal readonly BehaviorSystem BehaviorSystem;
+		internal readonly CollisionSystem CollisionSystem;
+		internal readonly ParticleSystem ParticleSystem;
+		internal readonly UISystem UISystem;
+		internal readonly AnimationSystem AnimationSystem;
+		internal readonly RenderingSystem RenderingSystem;
 
 		public void LoadScene(string sceneName, GameState gameState)
 		{

@@ -7,17 +7,14 @@ using System.Collections.Generic;
 
 namespace Coldsteel.Particles
 {
-	internal class ParticleSystem : GameComponent
+	internal class ParticleSystem : SystemBase<ParticleEmitter>
 	{
-		private readonly Dictionary<Scene, List<ParticleEmitter>> _emittersByScene = new Dictionary<Scene, List<ParticleEmitter>>();
-
 		private readonly Particle[] _particles = new Particle[4000];
 
 		private int _particleIndex = 0;
 
-		public ParticleSystem(Game game, Engine engine) : base(game)
+		public ParticleSystem(Game game, Engine engine) : base(game, engine)
 		{
-			game.Components.Add(this);
 		}
 
 		public override void Update(GameTime gameTime)
@@ -30,25 +27,6 @@ namespace Coldsteel.Particles
 		}
 
 		internal IEnumerable<Particle> Particles => _particles;
-
-		internal void AddEmitter(Scene scene, ParticleEmitter emitter)
-		{
-			var emitterList = GetEmitterListForScene(scene);
-			emitterList.Add(emitter);
-		}
-
-		internal void RemoveEmitter(Scene scene, ParticleEmitter emitter)
-		{
-			var emitterList = GetEmitterListForScene(scene);
-			emitterList.Remove(emitter);
-		}
-
-		private List<ParticleEmitter> GetEmitterListForScene(Scene scene)
-		{
-			return _emittersByScene.ContainsKey(scene)
-				? _emittersByScene[scene]
-				: (_emittersByScene[scene] = new List<ParticleEmitter>());
-		}
 
 		internal void AddParticles(IEnumerable<Particle> particles)
 		{
