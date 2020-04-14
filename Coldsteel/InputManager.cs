@@ -8,14 +8,13 @@ using KB = Microsoft.Xna.Framework.Input.Keyboard;
 using MS = Microsoft.Xna.Framework.Input.Mouse;
 using GP = Microsoft.Xna.Framework.Input.GamePad;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Coldsteel
 {
 	internal class InputManager : GameComponent
 	{
-		private static string windowInput;
-		private static bool recordTextInput;
-
 		private readonly Engine _engine;
 
 		public InputManager(Game game, Engine engine) : base(game)
@@ -42,16 +41,6 @@ namespace Coldsteel
 
 		public static Vector2 CenterScreen;
 
-		public static string InputBuffer
-		{
-			get
-			{
-				var value = windowInput;
-				windowInput = "";
-				return value;
-			}
-		}
-
 		public override void Update(GameTime gameTime)
 		{
 			CenterScreen = Game.GraphicsDevice.Viewport.Bounds.Center.ToVector2();
@@ -68,22 +57,34 @@ namespace Coldsteel
 			GamePads[(int)playerIndex] = GamePads[(int)playerIndex].Next(GP.GetState(playerIndex));
 		}
 
-		public static void BeginTextInput()
+		private static string _windowInput = "";
+
+		private static readonly List<object> _windowInputContext = new List<object>();
+
+		public static string GetTextInput(object context)
 		{
-			windowInput = "";
-			recordTextInput = true;
+			if (_windowInputContext.Last() != context) return ""; 
+			var value = _windowInput;
+			_windowInput = "";
+			return value;
 		}
 
-		public static void EndTextInput()
+		public static void BeginTextInput(object context)
 		{
-			recordTextInput = false;
-			windowInput = "";
+			_windowInput = "";
+			_windowInputContext.Add(context);
+		}
+
+		public static void EndTextInput(object context)
+		{
+			_windowInputContext.Remove(context);
+			_windowInput = "";
 		}
 
 		private void Window_TextInput(object sender, TextInputEventArgs e)
 		{
-			if (!recordTextInput) return;
-			windowInput += e.Character;
+			if (_windowInputContext.Count > 0)
+				_windowInput += e.Character;
 		}
 	}
 }

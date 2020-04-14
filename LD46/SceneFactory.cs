@@ -64,18 +64,18 @@ namespace LD46
 					if (down.IsDown()) rb.Entity.Position.Y += 10;
 				}));
 
-			int i = 0;
+			//int i = 0;
 
-			var buttonText = Text.New
-				.Configure(text =>
-				{
-					text.Value = "Hello World!";
-					text.Size = 36;
-					text.Dock = Dock.Fill;
-					text.Align = Align.Center;
-					text.VerticalAlign = Align.Center;
-					text.Color = new Color(89, 94, 108);
-				});
+			//var buttonText = Text.New
+			//	.Configure(text =>
+			//	{
+			//		text.Value = "Hello World!";
+			//		text.Size = 36;
+			//		text.Dock = Dock.Fill;
+			//		text.Align = Align.Center;
+			//		text.VerticalAlign = Align.Center;
+			//		text.Color = new Color(89, 94, 108);
+			//	});
 
 			//var image = Image.New
 			//	.Configure(img =>

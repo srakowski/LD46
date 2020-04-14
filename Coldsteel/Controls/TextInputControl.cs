@@ -3,7 +3,6 @@
 // file 'LICENSE.txt', which is part of this source code package.
 
 using Microsoft.Xna.Framework;
-using System;
 using System.Linq;
 
 namespace Coldsteel.Controls
@@ -17,8 +16,10 @@ namespace Coldsteel.Controls
 		public string InputBuffer(PlayerIndex playerIndex = PlayerIndex.One) =>
 			_bindingsByPlayer[(int)playerIndex].FirstOrDefault()?.InputBuffer ?? "";
 
-		public void BeginInput() => InputManager.BeginTextInput();
+		public void BeginInput(PlayerIndex playerIndex = PlayerIndex.One) =>
+			_bindingsByPlayer[(int)playerIndex].FirstOrDefault()?.BeginInput();
 
-		public void EndInput() => InputManager.EndTextInput();
+		public void EndInput(PlayerIndex playerIndex = PlayerIndex.One) =>
+			_bindingsByPlayer[(int)playerIndex].FirstOrDefault()?.EndInput();
 	}
 }

@@ -13,5 +13,9 @@ namespace Coldsteel.Controls
 		}
 
 		public abstract string InputBuffer { get; }
+
+		public abstract void BeginInput();
+
+		public abstract void EndInput();
 	}
 }

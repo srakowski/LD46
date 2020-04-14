@@ -12,6 +12,10 @@ namespace Coldsteel.Controls
 		{
 		}
 
-		public override string InputBuffer => InputManager.InputBuffer;
+		public override string InputBuffer => InputManager.GetTextInput(this);
+
+		public override void BeginInput() => InputManager.BeginTextInput(this);
+
+		public override void EndInput() => InputManager.EndTextInput(this);
 	}
 }
