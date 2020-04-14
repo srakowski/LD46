@@ -18,7 +18,7 @@ namespace Coldsteel.Audio
 
 		internal override void Update()
 		{
-			Listener.Position = new Vector3(Entity.Position / Engine.AudioSystem.Scalar, 1);
+			Listener.Position = new Vector3(Entity.Position / Engine.AudioSystem.Scalar, 3f);
 		}
 	}
 }

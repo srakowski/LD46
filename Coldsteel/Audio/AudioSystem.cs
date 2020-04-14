@@ -4,7 +4,7 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
-using System.Collections.Generic;
+ using System.Collections.Generic;
 using System.Linq;
 using MGAudioEmitter = Microsoft.Xna.Framework.Audio.AudioEmitter;
 using MGAudioListener = Microsoft.Xna.Framework.Audio.AudioListener;
@@ -16,7 +16,7 @@ namespace Coldsteel.Audio
 		private readonly Dictionary<Scene, List<IEnumerator<bool>>> _applyContinuationsByScene
 			= new Dictionary<Scene, List<IEnumerator<bool>>>();
 
-		public float Scalar = 200f;
+		public float Scalar = 500f;
 
 		public AudioSystem(Game game, Engine engine) : base(game, engine)
 		{

@@ -18,7 +18,7 @@ namespace Coldsteel.Audio
 
 		internal override void Update()
 		{
-			Emitter.Position = new Vector3(Entity.Position / Engine.AudioSystem.Scalar, -1);
+			Emitter.Position = new Vector3(Entity.Position / Engine.AudioSystem.Scalar, -3f);
 		}
 
 		public AudioEmitter Play(string soundEffectName)
