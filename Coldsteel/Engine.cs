@@ -3,6 +3,7 @@
 // file 'LICENSE.txt', which is part of this source code package.
 
 using Coldsteel.Animations;
+using Coldsteel.Audio;
 using Coldsteel.Particles;
 using Coldsteel.UI;
 using Microsoft.Xna.Framework;
@@ -20,6 +21,7 @@ namespace Coldsteel
 			InputManager = new InputManager(game, this);
 			BehaviorSystem = new BehaviorSystem(game, this);
 			CollisionSystem = new CollisionSystem(game, this);
+			AudioSystem = new AudioSystem(game, this);
 			ParticleSystem = new ParticleSystem(game, this);
 			UISystem = new UISystem(game, this);
 			AnimationSystem = new AnimationSystem(game, this);
@@ -31,6 +33,7 @@ namespace Coldsteel
 		internal readonly InputManager InputManager;
 		internal readonly BehaviorSystem BehaviorSystem;
 		internal readonly CollisionSystem CollisionSystem;
+		internal readonly AudioSystem AudioSystem;
 		internal readonly ParticleSystem ParticleSystem;
 		internal readonly UISystem UISystem;
 		internal readonly AnimationSystem AnimationSystem;

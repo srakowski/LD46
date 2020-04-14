@@ -16,7 +16,7 @@ namespace Coldsteel
 
 		public string Name { get; set; }
 
-		internal protected Entity Entity { get; private set; }
+		public Entity Entity { get; private set; }
 
 		private protected virtual void Activated() { }
 
@@ -36,6 +36,15 @@ namespace Coldsteel
 			Entity = null;
 			Scene = null;
 			Engine = null;
+		}
+	}
+
+	public static class ComponentExtensions
+	{
+		public static TComponent AddToEntity<TComponent>(this TComponent component, Entity entity) where TComponent : Component
+		{
+			entity.AddComponent(component);
+			return component;
 		}
 	}
 }

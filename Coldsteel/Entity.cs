@@ -2,6 +2,7 @@
 // This file is subject to the terms and conditions defined in
 // file 'LICENSE.txt', which is part of this source code package.
 
+using Coldsteel.Audio;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -118,12 +119,27 @@ namespace Coldsteel
 			return AddComponent(camera);
 		}
 
-		public static Entity New => new Entity();
-
-		public Entity AddToScene(Scene scene)
+		public Entity AddAudioListener()
 		{
-			scene.AddEntity(this);
-			return this;
+			var al = new AudioListener();
+			return AddComponent(al);
+		}
+
+		public Entity AddAudioEmitter()
+		{
+			var ae = new AudioEmitter();
+			return AddComponent(ae);
+		}
+
+		public static Entity New => new Entity();
+	}
+
+	public static class EntityExtensions
+	{
+		public static TEntity AddToScene<TEntity>(this TEntity entity, Scene scene) where TEntity : Entity
+		{
+			scene.AddEntity(entity);
+			return entity;
 		}
 	}
 }

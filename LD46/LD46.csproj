@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Behaviors\" />
     <Folder Include="Content\Effect\" />
     <Folder Include="Content\Song\" />
     <Folder Include="Content\SoundEffect\" />
