@@ -23,7 +23,7 @@ namespace Coldsteel.Audio
 
 		public AudioEmitter Play(string soundEffectName)
 		{
-			Engine.AudioSystem.PlaySoundEffect(Emitter, soundEffectName);
+			Engine.AudioSystem.PlaySoundEffect(this, soundEffectName);
 			return this;
 		}
 	}

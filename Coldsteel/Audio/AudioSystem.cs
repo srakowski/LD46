@@ -7,8 +7,6 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
 using System.Collections.Generic;
 using System.Linq;
-using MGAudioEmitter = Microsoft.Xna.Framework.Audio.AudioEmitter;
-using MGAudioListener = Microsoft.Xna.Framework.Audio.AudioListener;
 
 namespace Coldsteel.Audio
 {
@@ -44,7 +42,7 @@ namespace Coldsteel.Audio
 			continuations.RemoveAll(r => !r.Current);
 		}
 
-		internal void PlaySoundEffect(MGAudioEmitter emitter, string soundEffectName)
+		internal void PlaySoundEffect(AudioEmitter emitter, string soundEffectName)
 		{
 			var activeScene = Engine.SceneManager.ActiveScene;
 			if (activeScene == null) return;
@@ -55,11 +53,11 @@ namespace Coldsteel.Audio
 
 			var sei = se.GetValue().CreateInstance();
 
-			var listeners = ActiveComponents.OfType<AudioListener>().Select(l => l.Listener).ToArray();
+			var listeners = ActiveComponents.OfType<AudioListener>().ToArray();
 
 			sei.Apply3D(
-				listeners,
-				emitter
+				listeners.Where(l => !l.Dead).Select(l => l.Listener).ToArray(),
+				emitter.Emitter
 			);
 
 			sei.Play();
@@ -85,13 +83,13 @@ namespace Coldsteel.Audio
 			MediaPlayer.Stop();
 		}
 
-		private IEnumerator<bool> ContinueApply(SoundEffectInstance sei, MGAudioListener[] listeners, MGAudioEmitter emitter)
+		private IEnumerator<bool> ContinueApply(SoundEffectInstance sei, AudioListener[] listeners, AudioEmitter emitter)
 		{
-			while (sei.State != SoundState.Stopped && !_killSoundEffects)
+			while (sei.State != SoundState.Stopped && !_killSoundEffects && !emitter.Dead)
 			{
 				sei.Apply3D(
-					listeners,
-					emitter
+					listeners.Where(l => !l.Dead).Select(l => l.Listener).ToArray(),
+					emitter.Emitter
 				);
 				yield return true;
 			}

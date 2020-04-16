@@ -2,9 +2,9 @@
 
 namespace Coldsteel
 {
-	public interface ISprite
+	public interface IRenderer
 	{
-		string SpriteLayerName { get; }
+		string RenderingLayerName { get; }
 		bool Enabled { get; }
 		void Draw(SpriteBatch spriteBatch);
 	}

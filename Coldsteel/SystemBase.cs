@@ -4,6 +4,7 @@
 
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Coldsteel
 {
@@ -13,9 +14,9 @@ namespace Coldsteel
 
 		protected readonly Engine Engine;
 
-		protected List<TComponent> ActiveComponents =>
+		protected IEnumerable<TComponent> ActiveComponents =>
 			_componentsByScene.TryGetValue(Engine.SceneManager.ActiveScene, out var components)
-				? components
+				? components.Where(c => !c.Dead)
 				: null;
 
 		public SystemBase(Game game, Engine engine) : base(game)

@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Coldsteel.Particles
 {
-	internal struct Particle : ISprite
+	internal struct Particle : IRenderer
 	{
 		public Asset<Texture2D> Texture;
 		public Vector2 Position;
@@ -19,10 +19,10 @@ namespace Coldsteel.Particles
 		public Vector2 Velocity;
 		public float ScaleVelocity;
 		public float RotationVelocity;
-		public string SpriteLayerName;
+		public string RenderingLayerName;
 		public float LayerDepth;
 
-		string ISprite.SpriteLayerName => SpriteLayerName;
+		string IRenderer.RenderingLayerName => RenderingLayerName;
 
 		public bool Dead => Ttl <= 0;
 		public bool Enabled => !Dead;

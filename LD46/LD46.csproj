@@ -20,11 +20,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Behaviors\**" />
+    <EmbeddedResource Remove="Behaviors\**" />
+    <MonoGameContentReference Remove="Behaviors\**" />
+    <None Remove="Behaviors\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Coldsteel\Coldsteel.csproj" />    
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Behaviors\" />
     <Folder Include="Content\Effect\" />
     <Folder Include="Content\Song\" />
     <Folder Include="Content\SoundEffect\" />

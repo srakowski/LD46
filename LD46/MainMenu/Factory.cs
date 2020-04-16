@@ -16,7 +16,7 @@ namespace LD46.MainMenu
 		{
 			var scene = new Scene();
 			scene.AddAssetsFromDirectory(@"./Content");
-			scene.AddSpriteLayers();
+			scene.AddRenderingLayers();
 
 			var options = new[]
 			{

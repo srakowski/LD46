@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Coldsteel
 {
-	public class TextSprite : Component, ISprite
+	public class TextSprite : Component, IRenderer
 	{
 		private Asset<SpriteFont> _spriteFont;
 
@@ -26,33 +26,33 @@ namespace Coldsteel
 
 		public bool Enabled = true;
 
-		public string SpriteLayerName;
+		public string RenderingLayerName;
 
 		public string Text = "";
 
-		bool ISprite.Enabled => Enabled;
+		bool IRenderer.Enabled => Enabled && !Dead;
 
-		string ISprite.SpriteLayerName => SpriteLayerName;
+		string IRenderer.RenderingLayerName => RenderingLayerName;
 
 		public TextSprite() { }
 
-		public TextSprite(string assetName, string text, string spriteLayerName)
+		public TextSprite(string assetName, string text, string renderingLayerName)
 		{
 			AssetName = assetName;
 			Text = text;
-			SpriteLayerName = spriteLayerName;
+			RenderingLayerName = renderingLayerName;
 		}
 
 		private protected override void Activated()
 		{
-			Engine.RenderingSystem.AddSprite(Scene, this);
+			Engine.RenderingSystem.AddRenderer(Scene, this);
 			_spriteFont = Scene.Assets.FirstOrDefault(a => a.Name == AssetName) as Asset<SpriteFont>;
 		}
 
 		private protected override void Deactivated()
 		{
 			_spriteFont = null;
-			Engine.RenderingSystem.RemoveSprite(Scene, this);
+			Engine.RenderingSystem.RemoveRenderer(Scene, this);
 		}
 
 		internal void Draw(SpriteBatch spriteBatch)
@@ -71,6 +71,6 @@ namespace Coldsteel
 			);
 		}
 
-		void ISprite.Draw(SpriteBatch spriteBatch) => Draw(spriteBatch);
+		void IRenderer.Draw(SpriteBatch spriteBatch) => Draw(spriteBatch);
 	}
 }

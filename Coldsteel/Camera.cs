@@ -8,7 +8,13 @@ namespace Coldsteel
 {
 	public class Camera : Component
 	{
-		public bool Enabled = true;
+		private bool _enabled;
+
+		public bool Enabled
+		{
+			get => _enabled && !Dead;
+			set => _enabled = value;
+		}
 
 		public Vector2 ToWorldCoords(Vector2 coords) =>
 			Vector2.Transform(coords, Matrix.Invert(TransformationMatrix));

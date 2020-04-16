@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace Coldsteel
 {
-	public class SpriteLayer
+	public class RenderingLayer
 	{
 		public string Name;
 
@@ -30,14 +30,14 @@ namespace Coldsteel
 
 		public Matrix? TransformMatrix;
 
-		public SpriteLayer() { }
+		public RenderingLayer() { }
 
-		public SpriteLayer(string name)
+		public RenderingLayer(string name)
 		{
 			Name = name;
 		}
 
-		internal void Draw(SpriteBatch spriteBatch, Camera camera, IEnumerable<ISprite> sprites)
+		internal void Draw(SpriteBatch spriteBatch, Camera camera, IEnumerable<IRenderer> sprites)
 		{
 			var cameraMatrix = camera != null && !FixToCamera
 				? camera.TransformationMatrix

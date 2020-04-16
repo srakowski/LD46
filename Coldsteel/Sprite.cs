@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Coldsteel
 {
-	public class Sprite : Component, ISprite
+	public class Sprite : Component, IRenderer
 	{
 		private readonly string _assetName;
 
@@ -30,24 +30,24 @@ namespace Coldsteel
 
 		public bool Enabled = true;
 
-		public string SpriteLayerName;
+		public string RenderingLayerName;
 
-		bool ISprite.Enabled => Enabled;
+		bool IRenderer.Enabled => Enabled && !Dead;
 
 		private Rectangle? SourceRectangle => _textureFrames[FrameIndex % _textureFrames.Length];
 
-		string ISprite.SpriteLayerName => SpriteLayerName;
+		string IRenderer.RenderingLayerName => RenderingLayerName;
 
-		public Sprite(string assetName, string spriteLayerName, Size? frameSize = null)
+		public Sprite(string assetName, string renderingLayerName, Size? frameSize = null)
 		{
 			_assetName = assetName;
-			SpriteLayerName = spriteLayerName;
+			RenderingLayerName = renderingLayerName;
 			_frameSize = frameSize;
 		}
 
 		private protected override void Activated()
 		{
-			Engine.RenderingSystem.AddSprite(Scene, this);
+			Engine.RenderingSystem.AddRenderer(Scene, this);
 			_texture = Scene.Assets.FirstOrDefault(a => a.Name == _assetName) as Asset<Texture2D>;
 			CutTextureFrames();
 		}
@@ -55,7 +55,7 @@ namespace Coldsteel
 		private protected override void Deactivated()
 		{
 			_texture = null;
-			Engine.RenderingSystem.RemoveSprite(Scene, this);
+			Engine.RenderingSystem.RemoveRenderer(Scene, this);
 		}
 
 		internal void Draw(SpriteBatch spriteBatch)
@@ -100,6 +100,6 @@ namespace Coldsteel
 			}
 		}
 
-		void ISprite.Draw(SpriteBatch spriteBatch) => Draw(spriteBatch);
+		void IRenderer.Draw(SpriteBatch spriteBatch) => Draw(spriteBatch);
 	}
 }

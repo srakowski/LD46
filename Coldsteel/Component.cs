@@ -8,6 +8,8 @@ namespace Coldsteel
 {
 	public abstract class Component
 	{
+		private bool _dead = false;
+
 		protected Engine Engine { get; private set; }
 
 		protected Scene Scene { get; private set; }
@@ -15,6 +17,12 @@ namespace Coldsteel
 		public Guid Id { get; } = Guid.NewGuid();
 
 		public string Name { get; set; }
+
+		public bool Dead
+		{
+			get => _dead || (Entity?.Dead ?? false);
+			protected set => _dead = value;
+		}
 
 		public Entity Entity { get; private set; }
 

@@ -14,10 +14,10 @@ namespace Coldsteel.Particles
 	{
 		private Asset<Texture2D> _texture;
 		
-		public ParticleEmitter(string assetName, string spriteLayerName)
+		public ParticleEmitter(string assetName, string renderingLayer)
 		{
 			AssetName = assetName;
-			SpriteLayerName = spriteLayerName;
+			RenderingLayerName = renderingLayer;
 			ColorGen = new FixedValue<Color>(Color.White);
 			VelocityGen = new RandomVector2(-0.3f, 0.3f, -0.3f, 0.3f);
 			TtlGen = new RandomDouble(1000, 4000);
@@ -33,7 +33,7 @@ namespace Coldsteel.Particles
 		public ParticlePropertyFactory<Vector2> VelocityGen;
 		public ParticlePropertyFactory<float> ScaleVelocityGen;
 		public ParticlePropertyFactory<float> RotationVelocityGen;
-		public string SpriteLayerName;
+		public string RenderingLayerName;
 		public float LayerDepth = 1f;
 	
 		private protected override void Activated()
@@ -68,7 +68,7 @@ namespace Coldsteel.Particles
 					Velocity = VelocityGen?.Create(random) ?? new Vector2(0.3f, 0.3f),
 					ScaleVelocity = ScaleVelocityGen?.Create(random) ?? 0f,
 					RotationVelocity = RotationVelocityGen?.Create(random) ?? 0f,
-					SpriteLayerName = SpriteLayerName,
+					RenderingLayerName = RenderingLayerName,
 					LayerDepth = LayerDepth
 				};
         }

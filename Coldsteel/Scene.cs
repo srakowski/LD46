@@ -17,7 +17,7 @@ namespace Coldsteel
 	{
 		private readonly List<Entity> _entities = new List<Entity>();
 
-		private readonly List<SpriteLayer> _spriteLayers = new List<SpriteLayer>();
+		private readonly List<RenderingLayer> _renderingLayers = new List<RenderingLayer>();
 
 		private readonly List<Asset> _assets = new List<Asset>();
 
@@ -71,11 +71,11 @@ namespace Coldsteel
 			return this;
 		}
 
-		public IEnumerable<SpriteLayer> SpriteLayers => _spriteLayers;
+		public IEnumerable<RenderingLayer> RenderingLayers => _renderingLayers;
 
-		public Scene AddSpriteLayer(SpriteLayer spriteLayer)
+		public Scene AddRenderingLayer(RenderingLayer renderingLayer)
 		{
-			_spriteLayers.Add(spriteLayer);
+			_renderingLayers.Add(renderingLayer);
 			return this;
 		}
 
@@ -87,6 +87,17 @@ namespace Coldsteel
 
 			foreach (var entity in _entities.ToArray())
 				entity.Activate(engine, this, null);
+		}
+
+		internal void Clean()
+		{
+			_entities.ForEach(e => e.Clean());
+			var deadEntities = _entities.Where(e => e.Dead).ToArray();
+			foreach (var deadEntity in deadEntities)
+			{
+				deadEntity.Deactivate();
+				_entities.Remove(deadEntity);
+			}
 		}
 
 		internal void Deactivate()
@@ -131,8 +142,8 @@ namespace Coldsteel
 		public Scene AddSoundEffect(string name) => AddAsset(new Asset<SoundEffect>(name));
 		public Scene AddSong(string name) => AddAsset(new Asset<Song>(name));
 
-		public Scene AddSpriteLayer(string name, int depth) => AddSpriteLayer(
-			new SpriteLayer(name)
+		public Scene AddRenderingLayer(string name, int depth) => AddRenderingLayer(
+			new RenderingLayer(name)
 			{
 				Depth = depth
 			}

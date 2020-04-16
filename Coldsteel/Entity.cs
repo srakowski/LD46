@@ -6,11 +6,14 @@ using Coldsteel.Audio;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Coldsteel
 {
 	public class Entity
 	{
+		private bool _dead = false;
+
 		private readonly List<Component> _components = new List<Component>();
 
 		private readonly List<Entity> _children = new List<Entity>();
@@ -53,6 +56,22 @@ namespace Coldsteel
 
 		public IEnumerable<Component> Components => _components;
 
+		public bool Dead
+		{
+			get => _dead || (_parent?.Dead ?? false);
+			set => _dead = value;
+		}
+
+		public TComponent GetComponent<TComponent>() where TComponent : Component
+		{
+			return Components.OfType<TComponent>().FirstOrDefault();
+		}
+
+		public TComponent[] GetComponents<TComponent>() where TComponent : Component
+		{
+			return Components.OfType<TComponent>().ToArray();
+		}
+
 		public Entity AddComponent(Component component)
 		{
 			_components.Add(component);
@@ -82,6 +101,25 @@ namespace Coldsteel
 				component.Activate(engine, scene, this);
 		}
 
+		internal void Clean()
+		{
+			_children.ForEach(e => e.Clean());
+
+			var deadEntities = _children.Where(e => e.Dead).ToArray();
+			foreach (var deadEntity in deadEntities)
+			{
+				deadEntity.Deactivate();
+				_children.Remove(deadEntity);
+			}
+
+			var deadComponents = _components.Where(c => c.Dead).ToArray();
+			foreach (var deadComponent in deadComponents)
+			{
+				deadComponent.Deactivate();
+				_components.Remove(deadComponent);
+			}
+		}
+
 		internal void Deactivate()
 		{
 			foreach (var component in _components)
@@ -95,18 +133,18 @@ namespace Coldsteel
 			_engine = null;
 		}
 
-		public Entity AddSprite(string assetName, string spriteLayer, Size? frameSize = null) => AddComponent(new Sprite(assetName, spriteLayer, frameSize));
-		public Entity AddSprite(string assetName, string spriteLayer, Size? frameSize, Action<Sprite> configure)
+		public Entity AddSprite(string assetName, string renderingLayer, Size? frameSize = null) => AddComponent(new Sprite(assetName, renderingLayer, frameSize));
+		public Entity AddSprite(string assetName, string renderingLayer, Size? frameSize, Action<Sprite> configure)
 		{
-			var sprite = new Sprite(assetName, spriteLayer, frameSize);
+			var sprite = new Sprite(assetName, renderingLayer, frameSize);
 			configure(sprite);
 			return AddComponent(sprite);
 		}
 
-		public Entity AddTextSprite(string assetName, string text, string spriteLayer) => AddComponent(new TextSprite(assetName, text, spriteLayer));
-		public Entity AddTextSprite(string assetName, string text, string spriteLayer, Action<TextSprite> configure)
+		public Entity AddTextSprite(string assetName, string text, string renderingLayer) => AddComponent(new TextSprite(assetName, text, renderingLayer));
+		public Entity AddTextSprite(string assetName, string text, string renderingLayer, Action<TextSprite> configure)
 		{
-			var sprite = new TextSprite(assetName, text, spriteLayer);
+			var sprite = new TextSprite(assetName, text, renderingLayer);
 			configure(sprite);
 			return AddComponent(sprite);
 		}

@@ -13,7 +13,7 @@ namespace Coldsteel
 	{
 		private readonly Dictionary<Scene, List<Camera>> _camerasByScene = new Dictionary<Scene, List<Camera>>();
 
-		private readonly Dictionary<Scene, List<ISprite>> _spritesByScene = new Dictionary<Scene, List<ISprite>>();
+		private readonly Dictionary<Scene, List<IRenderer>> _renderersByScene = new Dictionary<Scene, List<IRenderer>>();
 
 		private readonly Engine _engine;
 
@@ -52,16 +52,16 @@ namespace Coldsteel
 			var scene = _engine.SceneManager.ActiveScene;
 			if (scene != null)
 			{
-				var sprites = GetSpriteListForScene(scene);
+				var renderers = GetRendererListForScene(scene);
 				var camera = GetCameraListForScene(scene).FirstOrDefault(c => c.Enabled);
 
-				foreach (var spriteLayer in scene.SpriteLayers.OrderBy(s => s.Depth))
+				foreach (var renderingLayer in scene.RenderingLayers.OrderBy(s => s.Depth))
 				{
-					var spritesThisLayer = sprites
-						.Concat(_engine.ParticleSystem.Particles.Cast<ISprite>())
-						.Where(s => s.Enabled && s.SpriteLayerName == spriteLayer.Name);
+					var renderersThisLayer = renderers
+						.Concat(_engine.ParticleSystem.Particles.Cast<IRenderer>())
+						.Where(s => s.Enabled && s.RenderingLayerName == renderingLayer.Name);
 						
-					spriteLayer.Draw(_spriteBatch, camera, spritesThisLayer);
+					renderingLayer.Draw(_spriteBatch, camera, renderersThisLayer);
 				}
 			}
 
@@ -76,23 +76,23 @@ namespace Coldsteel
 			_spriteBatch.End();
 		}
 
-		internal void AddSprite(Scene scene, ISprite sprite)
+		internal void AddRenderer(Scene scene, IRenderer sprite)
 		{
-			var spriteList = GetSpriteListForScene(scene);
+			var spriteList = GetRendererListForScene(scene);
 			spriteList.Add(sprite);
 		}
 
-		internal void RemoveSprite(Scene scene, ISprite sprite)
+		internal void RemoveRenderer(Scene scene, IRenderer sprite)
 		{
-			var spriteList = GetSpriteListForScene(scene);
+			var spriteList = GetRendererListForScene(scene);
 			spriteList.Remove(sprite);
 		}
 
-		private List<ISprite> GetSpriteListForScene(Scene scene)
+		private List<IRenderer> GetRendererListForScene(Scene scene)
 		{
-			return _spritesByScene.ContainsKey(scene)
-				? _spritesByScene[scene]
-				: (_spritesByScene[scene] = new List<ISprite>());
+			return _renderersByScene.ContainsKey(scene)
+				? _renderersByScene[scene]
+				: (_renderersByScene[scene] = new List<IRenderer>());
 		}
 
 		internal void AddCamera(Scene scene, Camera camera)

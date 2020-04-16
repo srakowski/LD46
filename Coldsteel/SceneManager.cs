@@ -46,6 +46,7 @@ namespace Coldsteel
 
 		public override void Update(GameTime gameTime)
 		{
+			ActiveScene?.Clean();
 			if (_pendingScene == null) return;
 			OnSceneChanging?.Invoke(this, new SceneChangingEventArgs(ActiveScene, _pendingScene));
 			ActiveScene?.Deactivate();

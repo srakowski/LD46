@@ -32,6 +32,7 @@ namespace Coldsteel
 
 		internal void Update(GameTime gameTime)
 		{
+			if (Dead) return;
 			GameTime = gameTime;
 			Delta = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 			Update();
