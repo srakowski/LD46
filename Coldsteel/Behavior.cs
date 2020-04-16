@@ -4,7 +4,6 @@
 
 using Coldsteel.Controls;
 using Microsoft.Xna.Framework;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -43,6 +42,14 @@ namespace Coldsteel
 		internal protected virtual void HandleCollision(Collision collision) { }
 
 		protected virtual void Update() { }
+
+		public Control GetControl(string name)
+		{
+			if (!Engine.Config.Controls.ContainsKey(name))
+				throw new System.Exception($"control not defined: {name}");
+
+			return Engine.Config.Controls[name];
+		}
 
 		public TControl GetControl<TControl>(string name) where TControl : Control
 		{

@@ -38,16 +38,16 @@ namespace Coldsteel
 		{
 			base.Initialize();
 			_vpa = new ViewportAdapter(Game.Window, Game.GraphicsDevice,
-				_engine.Config.ScreenDim.X, _engine.Config.ScreenDim.Y);
+				_engine.Config.ScreenDim.Width, _engine.Config.ScreenDim.Height);
 			_spriteBatch = new SpriteBatch(Game.GraphicsDevice);
 			_renderTarget = new RenderTarget2D(Game.GraphicsDevice,
-				_engine.Config.ScreenDim.X, _engine.Config.ScreenDim.Y);
+				_engine.Config.ScreenDim.Width, _engine.Config.ScreenDim.Height);
 		}
 
 		public override void Draw(GameTime gameTime)
 		{
 			GraphicsDevice.SetRenderTarget(_renderTarget);
-			GraphicsDevice.Clear(Color.CornflowerBlue);
+			GraphicsDevice.Clear(Color.Black);
 
 			var scene = _engine.SceneManager.ActiveScene;
 			if (scene != null)

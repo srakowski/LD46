@@ -1,11 +1,13 @@
-﻿using System;
-using Coldsteel;
+﻿using Coldsteel;
 using Microsoft.Xna.Framework;
 
 namespace LD46
 {
 	class LDJamGame : Game
 	{
+		public const int GameWidth = 1280;
+		public const int GameHeight = 1024;
+
 		private GraphicsDeviceManager _graphics;
 		private Engine _engine;
 
@@ -27,8 +29,8 @@ namespace LD46
 				_graphics,
 				new EngineConfig(
 					new SceneFactory(),
-					Controls.Create(),
-					new Point(1280, 1024)
+					ControlsFactory.Create(),
+					new Size(GameWidth, GameHeight)
 				)
 			);
 		}
@@ -37,14 +39,9 @@ namespace LD46
 		{
 			base.Initialize();
 			_engine.LoadScene(
-				nameof(SceneFactory.DummySceneNotToBeUsedForActualGame),
+				nameof(MainMenu),
 				new LDJamGameState()
 			);
-		}
-
-		protected override void OnExiting(object sender, EventArgs args)
-		{
-			base.OnExiting(sender, args);
 		}
 	}
 }

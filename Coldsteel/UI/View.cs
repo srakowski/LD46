@@ -121,5 +121,7 @@ namespace Coldsteel.UI
 				}
 			}
 		}
+
+		public static View New => new View();
 	}
 }

@@ -4,7 +4,8 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
- using System.Collections.Generic;
+using Microsoft.Xna.Framework.Media;
+using System.Collections.Generic;
 using System.Linq;
 using MGAudioEmitter = Microsoft.Xna.Framework.Audio.AudioEmitter;
 using MGAudioListener = Microsoft.Xna.Framework.Audio.AudioListener;
@@ -13,6 +14,8 @@ namespace Coldsteel.Audio
 {
 	internal class AudioSystem : SystemBase<AudioComponent>
 	{
+		private bool _killSoundEffects = false;
+
 		private readonly Dictionary<Scene, List<IEnumerator<bool>>> _applyContinuationsByScene
 			= new Dictionary<Scene, List<IEnumerator<bool>>>();
 
@@ -20,6 +23,12 @@ namespace Coldsteel.Audio
 
 		public AudioSystem(Game game, Engine engine) : base(game, engine)
 		{
+		}
+
+		public override void Initialize()
+		{
+			base.Initialize();
+			Engine.SceneManager.OnSceneChanging += SceneManager_OnSceneChanging;
 		}
 
 		public override void Update(GameTime gameTime)
@@ -35,7 +44,7 @@ namespace Coldsteel.Audio
 			continuations.RemoveAll(r => !r.Current);
 		}
 
-		internal void Play(MGAudioEmitter emitter, string soundEffectName)
+		internal void PlaySoundEffect(MGAudioEmitter emitter, string soundEffectName)
 		{
 			var activeScene = Engine.SceneManager.ActiveScene;
 			if (activeScene == null) return;
@@ -59,9 +68,26 @@ namespace Coldsteel.Audio
 			continuations.Add(ContinueApply(sei, listeners, emitter));
 		}
 
+		internal void PlaySong(string songName)
+		{
+			var activeScene = Engine.SceneManager.ActiveScene;
+			if (activeScene == null) return;
+			if (ActiveComponents == null) return;
+
+			var song = activeScene.Assets?.FirstOrDefault(a => a.Name == songName) as Asset<Song>;
+			if (song == null || !song.IsLoaded) return;
+
+			MediaPlayer.Play(song.GetValue());
+		}
+
+		internal void StopSong()
+		{
+			MediaPlayer.Stop();
+		}
+
 		private IEnumerator<bool> ContinueApply(SoundEffectInstance sei, MGAudioListener[] listeners, MGAudioEmitter emitter)
 		{
-			while (sei.State != SoundState.Stopped)
+			while (sei.State != SoundState.Stopped && !_killSoundEffects)
 			{
 				sei.Apply3D(
 					listeners,
@@ -75,9 +101,22 @@ namespace Coldsteel.Audio
 
 		private List<IEnumerator<bool>> GetApplyContinuationsByScene(Scene scene)
 		{
+			if (scene == null) return null;
 			return _applyContinuationsByScene.ContainsKey(scene)
 				? _applyContinuationsByScene[scene]
 				: (_applyContinuationsByScene[scene] = new List<IEnumerator<bool>>());
+		}
+
+		private void SceneManager_OnSceneChanging(object sender, SceneChangingEventArgs e)
+		{
+			MediaPlayer.Stop();
+			var soundEffectContinuations = GetApplyContinuationsByScene(e.FromScene);
+			if (soundEffectContinuations is null) return;
+			_killSoundEffects = true;
+			foreach (var con in soundEffectContinuations)
+				con.MoveNext();
+			_killSoundEffects = false;
+			soundEffectContinuations.Clear();
 		}
 	}
 }

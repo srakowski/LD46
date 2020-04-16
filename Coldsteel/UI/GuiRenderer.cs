@@ -47,7 +47,6 @@ namespace Coldsteel.UI
 
 		internal void Export(byte[] data)
 		{
-			_graphics.Save();
 			var bd = _image.LockBits(new Rectangle(0, 0, _image.Width, _image.Height), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
 			Marshal.Copy(bd.Scan0, data, 0, data.Length);
 			byte swap;
@@ -69,12 +68,14 @@ namespace Coldsteel.UI
 			using (var brush = new SolidBrush(text.Color.ToSys()))
 			using (var font = new Font(text.Font, text.Size, style))
 			{
+				var gs = _graphics.Save();
 				_graphics.Clip = new Region(text.Bounds.ToSys());
 				_graphics.DrawString(text.Value, font, brush, text.Bounds.ToSys(), new StringFormat
 				{
 					Alignment = text.Align.ToSys(),
 					LineAlignment = text.VerticalAlign.ToSys(),
 				});
+				_graphics.Restore(gs);
 			}
 		}
 
@@ -83,12 +84,14 @@ namespace Coldsteel.UI
 			using (var path = MakeDivPath(div))
 			using (var bgBrush = new SolidBrush(div.BackgroundColor.ToSys()))
 			{
+				var gs = _graphics.Save();
 				_graphics.FillPath(bgBrush, path);
 				if (div.BorderWidth > 0)
 				{
 					using (var pen = new Pen(div.BorderColor.ToSys(), div.BorderWidth))
 						_graphics.DrawPath(pen, path);
 				}
+				_graphics.Restore(gs);
 			}
 		}
 
@@ -99,7 +102,9 @@ namespace Coldsteel.UI
 				img = Image.FromFile(image.Source);
 				_loadedImages[image.Source] = img;
 			}
+			var gs = _graphics.Save();
 			_graphics.DrawImage(img, image.Bounds.ToSys());
+			_graphics.Restore(gs);
 		}
 
 		// Adapted from: http://csharphelper.com/blog/2016/01/draw-rounded-rectangles-in-c/

@@ -14,7 +14,7 @@ namespace Coldsteel
 		public EngineConfig(
 			ISceneFactory sceneFactory,
 			IEnumerable<Control> controls,
-			Point screenDim)
+			Size screenDim)
 		{
 			SceneFactory = sceneFactory;
 			Controls = controls.ToDictionary((ks) => ks.Name);
@@ -25,6 +25,6 @@ namespace Coldsteel
 
 		public IReadOnlyDictionary<string, Control> Controls { get; }
 
-		public Point ScreenDim { get; }
+		public Size ScreenDim { get; }
 	}
 }

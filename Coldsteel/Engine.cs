@@ -43,5 +43,10 @@ namespace Coldsteel
 		{
 			SceneManager.LoadScene(sceneName, gameState);
 		}
+
+		public void ExitGame()
+		{
+			Game.Exit();
+		}
 	}
 }

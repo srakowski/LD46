@@ -98,35 +98,3 @@ namespace Coldsteel.UI.Elements
 		public static implicit operator BorderRadius(int value) => new BorderRadius(value);
 	}
 }
-
-//internal class Box : RenderNode
-//{
-//	public Box(
-//		MGRectangle bounds,
-//		RenderNode[] children,
-//		MGColor? bgColor = null,
-//		MGColor? borderColor = null,
-//		int borderWidth = 0,
-//		BorderRadius borderRadius = default
-//		)
-//	{
-//		Bounds = bounds;
-//		Children = children;
-//		BackgroundColor = bgColor ?? MGColor.Transparent;
-//		BorderColor = borderColor ?? MGColor.Transparent;
-//		BorderWidth = borderWidth;
-//		BorderRadius = borderRadius;
-//	}
-
-//	public MGRectangle Bounds { get; }
-
-//	public RenderNode[] Children { get; }
-
-//	public MGColor BackgroundColor { get; }
-
-//	public MGColor BorderColor { get; }
-
-//	public int BorderWidth { get; }
-
-//	public BorderRadius BorderRadius { get; }
-//}

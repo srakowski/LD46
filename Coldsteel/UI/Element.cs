@@ -9,17 +9,17 @@ namespace Coldsteel.UI
 {
 	public abstract class Element
 	{
-		public Anchor Anchor { get; set; } = Anchor.TopLeft;
+		public Anchor Anchor = Anchor.TopLeft;
 
-		public Dock Dock { get; set; } = Dock.None;
+		public Dock Dock = Dock.None;
 
-		public Anchor Origin { get; set; } = Anchor.TopLeft;
+		public Anchor Origin = Anchor.TopLeft;
 
-		public Point Offset { get; set; } = Point.Zero;
+		public Point Offset = Point.Zero;
 
-		public int Width { get; set; } = 100;
+		public int Width = 100;
 
-		public int Height { get; set; } = 100;
+		public int Height = 100;
 
 		public Rectangle Bounds { get; private set; }
 

@@ -27,7 +27,7 @@ namespace Coldsteel.UI
 		{
 			base.Initialize();
 			_spriteBatch = new SpriteBatch(Game.GraphicsDevice);
-			_texture = new Texture2D(Game.GraphicsDevice, Engine.Config.ScreenDim.X, Engine.Config.ScreenDim.Y, false, SurfaceFormat.Color);
+			_texture = new Texture2D(Game.GraphicsDevice, Engine.Config.ScreenDim.Width, Engine.Config.ScreenDim.Height, false, SurfaceFormat.Color);
 			_guiRenderer = new GuiRenderer(_texture.Width, _texture.Height);
 			_bytes = new byte[_texture.Width * _texture.Height * 4];
 		}

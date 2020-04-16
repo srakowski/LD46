@@ -16,6 +16,6 @@ namespace Coldsteel.Audio
 			Engine.AudioSystem.RemoveComponent(Scene, this);
 		}
 
-		internal abstract void Update();
+		internal virtual void Update() { }
 	}
 }

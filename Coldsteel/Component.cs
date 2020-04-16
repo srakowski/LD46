@@ -8,7 +8,7 @@ namespace Coldsteel
 {
 	public abstract class Component
 	{
-		private protected Engine Engine { get; private set; }
+		protected Engine Engine { get; private set; }
 
 		protected Scene Scene { get; private set; }
 
