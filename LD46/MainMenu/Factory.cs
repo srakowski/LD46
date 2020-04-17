@@ -1,5 +1,6 @@
 ﻿using System;
 using Coldsteel;
+using Coldsteel.Audio;
 using Coldsteel.UI;
 using Coldsteel.UI.Elements;
 using Microsoft.Xna.Framework;
@@ -16,7 +17,14 @@ namespace LD46.MainMenu
 		{
 			var scene = new Scene();
 			scene.AddAssetsFromDirectory(@"./Content");
-			scene.AddRenderingLayers();
+
+			var backgroundLayer = RenderingLayer.New("bg", 0)
+				.AddToScene(scene)
+				.SetShader(new Shaders.Fade());
+
+			Entity.New
+				.AddToScene(scene)
+				.AddSprite("Texture2D/mainMenuBackground", backgroundLayer.Name);
 
 			var options = new[]
 			{
@@ -40,7 +48,7 @@ namespace LD46.MainMenu
 						title.Align = Align.Center;
 						title.Anchor = Anchor.Center;
 						title.Offset.Y = -200;
-						title.Width = 1024;
+						title.Width = LDJamGame.GameWidth;
 						title.Origin = Anchor.Center;
 					})
 				)
@@ -65,7 +73,7 @@ namespace LD46.MainMenu
 				opt.Align = Align.Center;
 				opt.Anchor = Anchor.Center;
 				opt.Origin = Anchor.Center;
-				opt.Width = 1024;
+				opt.Width = LDJamGame.GameWidth;
 				opt.Offset.Y = -80 + (80 * index);
 				opt.Height = 80;
 				opt.VerticalAlign = Align.Center;

@@ -133,19 +133,19 @@ namespace Coldsteel
 			_engine = null;
 		}
 
-		public Entity AddSprite(string assetName, string renderingLayer, Size? frameSize = null) => AddComponent(new Sprite(assetName, renderingLayer, frameSize));
-		public Entity AddSprite(string assetName, string renderingLayer, Size? frameSize, Action<Sprite> configure)
+		public Entity AddSprite(string assetName, string renderingLayer = null, Size? frameSize = null) => AddComponent(new Sprite(assetName, renderingLayer, frameSize));
+		public Entity AddSprite(string assetName, Action<Sprite> configure)
 		{
-			var sprite = new Sprite(assetName, renderingLayer, frameSize);
-			configure(sprite);
+			var sprite = new Sprite(assetName);
+			configure?.Invoke(sprite);
 			return AddComponent(sprite);
 		}
 
-		public Entity AddTextSprite(string assetName, string text, string renderingLayer) => AddComponent(new TextSprite(assetName, text, renderingLayer));
-		public Entity AddTextSprite(string assetName, string text, string renderingLayer, Action<TextSprite> configure)
+		public Entity AddTextSprite(string assetName, string text, string renderingLayer = null) => AddComponent(new TextSprite(assetName, text, renderingLayer));
+		public Entity AddTextSprite(string assetName, string text, string renderingLayer = null, Action<TextSprite> configure = null)
 		{
 			var sprite = new TextSprite(assetName, text, renderingLayer);
-			configure(sprite);
+			configure?.Invoke(sprite);
 			return AddComponent(sprite);
 		}
 

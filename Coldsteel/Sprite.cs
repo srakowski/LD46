@@ -38,7 +38,7 @@ namespace Coldsteel
 
 		string IRenderer.RenderingLayerName => RenderingLayerName;
 
-		public Sprite(string assetName, string renderingLayerName, Size? frameSize = null)
+		public Sprite(string assetName, string renderingLayerName = null, Size? frameSize = null)
 		{
 			_assetName = assetName;
 			RenderingLayerName = renderingLayerName;

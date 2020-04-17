@@ -8,8 +8,6 @@ namespace LD46.Gameplay
 		{
 			var scene = new Scene();
 			scene.AddAssetsFromDirectory(@"./Content");
-			scene.AddRenderingLayers();
-
 			return scene;
 		}
 	}

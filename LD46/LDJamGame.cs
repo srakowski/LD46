@@ -5,8 +5,8 @@ namespace LD46
 {
 	class LDJamGame : Game
 	{
-		public const int GameWidth = 1280;
-		public const int GameHeight = 1024;
+		public const int GameWidth = 1024;
+		public const int GameHeight = 768;
 
 		private GraphicsDeviceManager _graphics;
 		private Engine _engine;

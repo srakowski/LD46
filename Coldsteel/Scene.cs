@@ -15,6 +15,11 @@ namespace Coldsteel
 {
 	public class Scene
 	{
+		public Scene()
+		{
+			AddRenderingLayer(null, 0);
+		}
+
 		private readonly List<Entity> _entities = new List<Entity>();
 
 		private readonly List<RenderingLayer> _renderingLayers = new List<RenderingLayer>();
@@ -38,6 +43,11 @@ namespace Coldsteel
 		}
 
 		public IEnumerable<Asset> Assets => _assets;
+
+		internal Asset<T> GetAsset<T>(string assetName)
+		{
+			return Assets.OfType<Asset<T>>().FirstOrDefault(a => a.Name == assetName) as Asset<T>;
+		}
 
 		public Scene AddAsset(Asset asset)
 		{
@@ -84,6 +94,9 @@ namespace Coldsteel
 			_engine = engine;
 
 			LoadContent();
+
+			foreach (var renderingLayer in _renderingLayers)
+				renderingLayer.Activate(engine, this);
 
 			foreach (var entity in _entities.ToArray())
 				entity.Activate(engine, this, null);

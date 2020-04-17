@@ -36,7 +36,7 @@ namespace Coldsteel
 
 		public TextSprite() { }
 
-		public TextSprite(string assetName, string text, string renderingLayerName)
+		public TextSprite(string assetName, string text, string renderingLayerName = null)
 		{
 			AssetName = assetName;
 			Text = text;

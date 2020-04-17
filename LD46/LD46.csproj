@@ -31,11 +31,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Content\Effect\" />
     <Folder Include="Content\Song\" />
     <Folder Include="Content\SoundEffect\" />
     <Folder Include="Content\SpriteFont\" />
-    <Folder Include="Content\Texture2D\" />
   </ItemGroup>
 
 </Project>
