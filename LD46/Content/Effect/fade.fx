@@ -7,6 +7,8 @@
 	#define PS_SHADERMODEL ps_4_0_level_9_1
 #endif
 
+extern float Percent;
+
 Texture2D SpriteTexture;
 
 sampler2D SpriteTextureSampler = sampler_state
@@ -31,7 +33,7 @@ float4 MainPS(VertexShaderOutput input) : COLOR
 
 	// pixel.r = sin(input.TextureCoordinates.x);
 
-	return pixel;
+	return pixel * Percent;
 }
 
 technique SpriteDrawing

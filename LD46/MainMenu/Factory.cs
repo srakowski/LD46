@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using Coldsteel;
 using Coldsteel.Audio;
 using Coldsteel.UI;
 using Coldsteel.UI.Elements;
+using LD46.Shaders;
 using Microsoft.Xna.Framework;
 
 namespace LD46.MainMenu
@@ -18,9 +20,11 @@ namespace LD46.MainMenu
 			var scene = new Scene();
 			scene.AddAssetsFromDirectory(@"./Content");
 
+			var fader = new Shaders.Fade();
+			scene.SetShader(fader);
+
 			var backgroundLayer = RenderingLayer.New("bg", 0)
-				.AddToScene(scene)
-				.SetShader(new Shaders.Fade());
+				.AddToScene(scene);
 
 			Entity.New
 				.AddToScene(scene)
@@ -58,7 +62,7 @@ namespace LD46.MainMenu
 			Entity.New
 				.AddToScene(scene)
 				.AddComponent(view)
-				.AddComponent(new MenuController(options, gameState));
+				.AddComponent(new MenuController(options, gameState, fader));
 
 			return scene;
 		}
@@ -86,11 +90,14 @@ namespace LD46.MainMenu
 			private Text[] _options;
 			private Controls _controls;
 			private GameState _gameState;
+			private bool _transitioning = false;
+			private Fade _fade;
 
-			public MenuController(Text[] options, GameState gameState)
+			public MenuController(Text[] options, GameState gameState, Fade fade)
 			{ 
 				_options = options;
 				_gameState = gameState;
+				_fade = fade;
 			}
 
 			protected override void Initialize()
@@ -101,16 +108,30 @@ namespace LD46.MainMenu
 
 			protected override void Update()
 			{
+				if (_transitioning) return;
 				if (_controls.Action.WasPushed())
 				{
-					if (_options[_idx].Value == PLAY) Engine.LoadScene(nameof(Gameplay), _gameState);
-					if (_options[_idx].Value == EXIT) Engine.ExitGame();
+					if (_options[_idx].Value == PLAY)
+						StartCoroutine(FadeOutThen(() => Engine.LoadScene(nameof(Gameplay), _gameState)));
+					if (_options[_idx].Value == EXIT)
+						Engine.ExitGame();
 					return;
 				}
 				if (_controls.Up.WasPushed()) _idx--;
 				if (_controls.Down.WasPushed()) _idx++;
 				_idx = MathHelper.Clamp(_idx, 0, _options.Length - 1);
 				UpdateOptions();
+			}
+
+			private IEnumerator FadeOutThen(Action doThis)
+			{
+				for (float f = 1f; f > 0f; f -= (0.002f * (float)GameTime.ElapsedGameTime.TotalMilliseconds))
+				{
+					_fade.Percent = f;
+					if (_fade.Percent < 0f) _fade.Percent = 0f;
+					yield return null;
+				}
+				doThis();
 			}
 
 			private void UpdateOptions()

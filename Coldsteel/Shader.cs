@@ -19,7 +19,7 @@ namespace Coldsteel
 
 		public Effect Effect => _effectAsset.IsLoaded ? _effectAsset.GetValue() : null;
 
-		internal void Activate(Engine engine, Scene scene, RenderingLayer renderingLayer)
+		internal void Activate(Engine engine, Scene scene)
 		{
 			_effectAsset = scene.GetAsset<Effect>(AssetName);
 		}
@@ -28,5 +28,7 @@ namespace Coldsteel
 		{
 			_effectAsset = null;
 		}
+
+		public virtual void ApplyParameters() { }
 	}
 }

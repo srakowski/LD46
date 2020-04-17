@@ -95,6 +95,8 @@ namespace Coldsteel
 
 			LoadContent();
 
+			Shader?.Activate(_engine, this);
+
 			foreach (var renderingLayer in _renderingLayers)
 				renderingLayer.Activate(engine, this);
 
@@ -120,6 +122,8 @@ namespace Coldsteel
 
 			foreach (var contentDependency in _assets)
 				contentDependency.Unload();
+
+			Shader?.Deactivate();
 
 			_content.Unload();
 			_content = null;
@@ -178,6 +182,17 @@ namespace Coldsteel
 			if (c != null) return c;
 
 			return FindComponentById(entities.SelectMany(e => e.Children), id);
+		}
+
+		public Shader Shader { get; private set; }
+
+		public Scene SetShader(Shader shader)
+		{
+			Shader?.Deactivate();
+			Shader = shader;
+			if (_engine != null)
+				shader.Activate(_engine, this);
+			return this;
 		}
 	}
 }

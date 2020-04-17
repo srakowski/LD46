@@ -39,7 +39,7 @@ namespace Coldsteel
 			Shader?.Deactivate();
 			if (_engine != null && _scene != null)
 			{
-				shader.Activate(_engine, _scene, this);
+				shader.Activate(_engine, _scene);
 			}
 			Shader = shader;
 			return this;
@@ -68,7 +68,7 @@ namespace Coldsteel
 		{
 			_engine = engine;
 			_scene = scene;
-			Shader?.Activate(engine, scene, this);
+			Shader?.Activate(engine, scene);
 		}
 
 		internal void Deactivate()
@@ -95,6 +95,8 @@ namespace Coldsteel
 				Shader?.Effect,
 				transformMatrix * cameraMatrix
 			);
+
+			Shader?.ApplyParameters();
 
 			foreach (var sprite in sprites)
 				sprite.Draw(spriteBatch);

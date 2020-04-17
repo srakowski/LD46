@@ -71,7 +71,9 @@ namespace Coldsteel
 			GraphicsDevice.Clear(Color.Black);
 
 			_vpa.Reset();
-			_spriteBatch.Begin(transformMatrix: _vpa.GetScaleMatrix());
+			var shader = scene.Shader;
+			_spriteBatch.Begin(effect: shader?.Effect, transformMatrix: _vpa.GetScaleMatrix());
+			shader?.ApplyParameters();
 			_spriteBatch.Draw(_renderTarget, Vector2.Zero, Color.White);
 			_spriteBatch.End();
 		}
