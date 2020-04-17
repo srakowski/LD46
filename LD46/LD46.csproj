@@ -31,7 +31,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Content\Song\" />
     <Folder Include="Content\SoundEffect\" />
     <Folder Include="Content\SpriteFont\" />
   </ItemGroup>

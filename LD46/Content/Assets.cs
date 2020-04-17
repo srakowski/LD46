@@ -10,6 +10,7 @@ namespace LD46
 		public static class Song
 		{
 			public const string dummy = "Song/dummy";
+			public const string somethingNewIgnoreMe = "Song/somethingNewIgnoreMe";
 		}
 		public static class SoundEffect
 		{
