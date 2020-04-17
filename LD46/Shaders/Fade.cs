@@ -6,7 +6,7 @@ namespace LD46.Shaders
 	{
 		public float Percent { get; set; } = 1.0f;
 
-		public Fade() : base("Effect/fade")
+		public Fade() : base(Assets.Effect.fade)
 		{
 		}
 

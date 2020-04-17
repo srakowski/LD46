@@ -28,7 +28,7 @@ namespace LD46.MainMenu
 
 			Entity.New
 				.AddToScene(scene)
-				.AddSprite("Texture2D/mainMenuBackground", backgroundLayer.Name);
+				.AddSprite(Assets.Texture2D.mainMenuBackground, backgroundLayer.Name);
 
 			var options = new[]
 			{
