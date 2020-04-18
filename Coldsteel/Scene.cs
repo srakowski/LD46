@@ -194,5 +194,10 @@ namespace Coldsteel
 				shader.Activate(_engine, this);
 			return this;
 		}
+
+		public void ClearRenderingLayers()
+		{
+			_renderingLayers.Clear();
+		}
 	}
 }

@@ -24,6 +24,7 @@ namespace LD46
 		public static class Texture2D
 		{
 			public const string dummy = "Texture2D/dummy";
+			public const string hero = "Texture2D/hero";
 			public const string mainMenuBackground = "Texture2D/mainMenuBackground";
 			public const string player = "Texture2D/player";
 			public const string staticElectricity = "Texture2D/staticElectricity";

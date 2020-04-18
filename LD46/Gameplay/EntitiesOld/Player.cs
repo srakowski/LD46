@@ -5,7 +5,7 @@ using Coldsteel.UI.Elements;
 using Microsoft.Xna.Framework;
 using System.Collections;
 
-namespace LD46.Gameplay.Entities
+namespace LD46.Gameplay.EntitiesOld
 {
 	class Player : Actor
 	{
@@ -15,10 +15,14 @@ namespace LD46.Gameplay.Entities
 		{
 			this.map = map;
 			this.map.PlacePlayer(this);
-			this.AddSprite(Assets.Texture2D.player, s =>
-			{
-				s.Origin = new Vector2(0, 72);
-			});
+			this.AddSprite(
+				Assets.Texture2D.hero,
+				s =>
+				{
+					s.FrameIndex = 0;
+				},
+				frameSize: new Size(16, 16)
+			);
 			new PlayerController(this).AddToEntity(this);
 			Battery = new Battery();
 			PaceMaker = new PaceMaker(this).AddToEntity(this);

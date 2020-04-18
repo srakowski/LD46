@@ -1,6 +1,6 @@
 ﻿using Coldsteel;
 
-namespace LD46.Gameplay.Entities
+namespace LD46.Gameplay.EntitiesOld
 {
 	abstract class Drop : Actor
 	{

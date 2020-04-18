@@ -66,7 +66,11 @@ namespace Coldsteel.Animations
 			LoadFrame();
 		}
 
-		public void Animate(string name) => LoadAnimation(_spriteAnimations.First(a => a.Name == name));
+		public void Animate(string name)
+		{
+			if (_currentAnimation?.Name == name) return;
+			LoadAnimation(_spriteAnimations.First(a => a.Name == name));
+		}
 
 		private void LoadFrame()
 		{

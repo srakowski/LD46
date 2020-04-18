@@ -103,7 +103,7 @@
 /processorParam:Quality=Best
 /build:SoundEffect/beat.wav
 
-#begin Texture2D/static.png
+#begin Texture2D/staticElectricity.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -113,5 +113,5 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Texture2D/static.png
+/build:Texture2D/staticElectricity.png
 

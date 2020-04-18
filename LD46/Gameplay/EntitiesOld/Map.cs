@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 
-namespace LD46.Gameplay.Entities
+namespace LD46.Gameplay.EntitiesOld
 {
 	class Map : Entity
 	{

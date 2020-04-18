@@ -2,11 +2,11 @@
 using Microsoft.Xna.Framework;
 using System;
 
-namespace LD46.Gameplay.Entities
+namespace LD46.Gameplay.EntitiesOld
 {
 	class Tile : Entity
 	{
-		public static int TileDim = 72;
+		public static int TileDim = 16;
 
 		public Tile(Point mapPosition)
 		{

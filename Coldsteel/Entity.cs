@@ -141,9 +141,9 @@ namespace Coldsteel
 		public static TEntity AddSprite<TEntity>(this TEntity entity, string assetName, string renderingLayer = null, Size? frameSize = null) where TEntity : Entity =>
 			entity.AddComponent(new Sprite(assetName, renderingLayer, frameSize)) as TEntity;
 
-		public static TEntity AddSprite<TEntity>(this TEntity entity, string assetName, Action<Sprite> configure) where TEntity : Entity
+		public static TEntity AddSprite<TEntity>(this TEntity entity, string assetName, Action<Sprite> configure, Size? frameSize = null) where TEntity : Entity
 		{
-			var sprite = new Sprite(assetName);
+			var sprite = new Sprite(assetName, frameSize: frameSize);
 			configure?.Invoke(sprite);
 			return entity.AddComponent(sprite) as TEntity;
 		}

@@ -5,8 +5,8 @@ namespace LD46
 {
 	class PaceMakerGame : Game
 	{
-		public const int GameWidth = 1920;
-		public const int GameHeight = 1080;
+		public const int GameWidth = 128;
+		public const int GameHeight = 128;
 
 		private GraphicsDeviceManager _graphics;
 		private Engine _engine;

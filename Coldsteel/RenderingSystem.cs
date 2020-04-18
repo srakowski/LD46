@@ -72,7 +72,7 @@ namespace Coldsteel
 
 			_vpa.Reset();
 			var shader = scene.Shader;
-			_spriteBatch.Begin(effect: shader?.Effect, transformMatrix: _vpa.GetScaleMatrix());
+			_spriteBatch.Begin(effect: shader?.Effect, transformMatrix: _vpa.GetScaleMatrix(), samplerState: SamplerState.PointClamp);
 			shader?.ApplyParameters();
 			_spriteBatch.Draw(_renderTarget, Vector2.Zero, Color.White);
 			_spriteBatch.End();
