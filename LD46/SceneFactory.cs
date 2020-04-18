@@ -9,8 +9,8 @@ namespace LD46
 		{
 			switch (sceneName)
 			{
-				case nameof(MainMenu): return MainMenu.Factory.Create(gameState as LDJamGameState);
-				case nameof(Gameplay): return Gameplay.Factory.Create(gameState as LDJamGameState);
+				case nameof(MainMenu): return MainMenu.Factory.Create(gameState as PaceMakerGameState);
+				case nameof(Gameplay): return Gameplay.Factory.Create(gameState as PaceMakerGameState);
 				default: throw new NotImplementedException("TODO");
 			}
 		}

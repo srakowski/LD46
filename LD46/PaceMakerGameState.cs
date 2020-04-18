@@ -2,7 +2,7 @@
 
 namespace LD46
 {
-	class LDJamGameState : GameState
+	class PaceMakerGameState : GameState
 	{
 	}
 }

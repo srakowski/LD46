@@ -80,7 +80,7 @@ namespace Coldsteel
 			return this;
 		}
 
-		public Entity AddChild(Entity entity)
+		internal Entity AddChild(Entity entity)
 		{
 			_children.Add(entity);
 			if (_engine != null)
@@ -133,51 +133,62 @@ namespace Coldsteel
 			_engine = null;
 		}
 
-		public Entity AddSprite(string assetName, string renderingLayer = null, Size? frameSize = null) => AddComponent(new Sprite(assetName, renderingLayer, frameSize));
-		public Entity AddSprite(string assetName, Action<Sprite> configure)
-		{
-			var sprite = new Sprite(assetName);
-			configure?.Invoke(sprite);
-			return AddComponent(sprite);
-		}
-
-		public Entity AddTextSprite(string assetName, string text, string renderingLayer = null) => AddComponent(new TextSprite(assetName, text, renderingLayer));
-		public Entity AddTextSprite(string assetName, string text, string renderingLayer = null, Action<TextSprite> configure = null)
-		{
-			var sprite = new TextSprite(assetName, text, renderingLayer);
-			configure?.Invoke(sprite);
-			return AddComponent(sprite);
-		}
-
-		public Entity AddCamera() => AddComponent(new Camera());
-		public Entity AddCamera(Action<Camera> configure)
-		{
-			var camera = new Camera();
-			configure(camera);
-			return AddComponent(camera);
-		}
-
-		public Entity AddAudioListener()
-		{
-			var al = new AudioListener();
-			return AddComponent(al);
-		}
-
-		public Entity AddAudioEmitter()
-		{
-			var ae = new AudioEmitter();
-			return AddComponent(ae);
-		}
-
 		public static Entity New => new Entity();
 	}
 
 	public static class EntityExtensions
 	{
+		public static TEntity AddSprite<TEntity>(this TEntity entity, string assetName, string renderingLayer = null, Size? frameSize = null) where TEntity : Entity =>
+			entity.AddComponent(new Sprite(assetName, renderingLayer, frameSize)) as TEntity;
+
+		public static TEntity AddSprite<TEntity>(this TEntity entity, string assetName, Action<Sprite> configure) where TEntity : Entity
+		{
+			var sprite = new Sprite(assetName);
+			configure?.Invoke(sprite);
+			return entity.AddComponent(sprite) as TEntity;
+		}
+
+		public static TEntity AddTextSprite<TEntity>(this TEntity entity, string assetName, string text, string renderingLayer = null) where TEntity : Entity =>
+			entity.AddComponent(new TextSprite(assetName, text, renderingLayer)) as TEntity;
+
+		public static TEntity AddTextSprite<TEntity>(this TEntity entity, string assetName, string text, string renderingLayer = null, Action<TextSprite> configure = null) where TEntity : Entity
+		{
+			var sprite = new TextSprite(assetName, text, renderingLayer);
+			configure?.Invoke(sprite);
+			return entity.AddComponent(sprite) as TEntity;
+		}
+
+		public static TEntity AddCamera<TEntity>(this TEntity entity) where TEntity : Entity =>
+			entity.AddComponent(new Camera()) as TEntity;
+
+		public static TEntity AddCamera<TEntity>(this TEntity entity, Action<Camera> configure) where TEntity : Entity
+		{
+			var camera = new Camera();
+			configure(camera);
+			return entity.AddComponent(camera) as TEntity;
+		}
+
+		public static TEntity AddAudioListener<TEntity>(this TEntity entity) where TEntity : Entity
+		{
+			var al = new AudioListener();
+			return entity.AddComponent(al) as TEntity;
+		}
+
+		public static TEntity AddAudioEmitter<TEntity>(this TEntity entity) where TEntity : Entity
+		{
+			var ae = new AudioEmitter();
+			return entity.AddComponent(ae) as TEntity;
+		}
+
 		public static TEntity AddToScene<TEntity>(this TEntity entity, Scene scene) where TEntity : Entity
 		{
 			scene.AddEntity(entity);
 			return entity;
+		}
+
+		public static TEntity AddChild<TEntity>(this TEntity entity, Entity child) where TEntity : Entity
+		{
+			return entity.AddChild(child) as TEntity;
 		}
 	}
 }

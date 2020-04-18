@@ -8,7 +8,7 @@ namespace Coldsteel
 {
 	public class Camera : Component
 	{
-		private bool _enabled;
+		private bool _enabled = true;
 
 		public bool Enabled
 		{

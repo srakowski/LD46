@@ -9,15 +9,19 @@ namespace LD46
 {
 	class Controls
 	{
+		[KeyboardButton(Keys.W)]
 		[KeyboardButton(Keys.Up)]
 		public ButtonControl Up { get; private set; }
 
+		[KeyboardButton(Keys.S)]
 		[KeyboardButton(Keys.Down)]
 		public ButtonControl Down { get; private set; }
 
+		[KeyboardButton(Keys.A)]
 		[KeyboardButton(Keys.Left)]
 		public ButtonControl Left { get; private set; }
 
+		[KeyboardButton(Keys.D)]
 		[KeyboardButton(Keys.Right)]
 		public ButtonControl Right { get; private set; }
 

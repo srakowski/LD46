@@ -15,7 +15,7 @@ namespace LD46.MainMenu
 		const string SETTINGS = "Settings";
 		const string EXIT = "Exit";
 
-		public static Scene Create(LDJamGameState gameState)
+		public static Scene Create(PaceMakerGameState gameState)
 		{
 			var scene = new Scene();
 			scene.AddAssetsFromDirectory(@"./Content");
@@ -52,7 +52,7 @@ namespace LD46.MainMenu
 						title.Align = Align.Center;
 						title.Anchor = Anchor.Center;
 						title.Offset.Y = -200;
-						title.Width = LDJamGame.GameWidth;
+						title.Width = PaceMakerGame.GameWidth;
 						title.Origin = Anchor.Center;
 					})
 				)
@@ -77,7 +77,7 @@ namespace LD46.MainMenu
 				opt.Align = Align.Center;
 				opt.Anchor = Anchor.Center;
 				opt.Origin = Anchor.Center;
-				opt.Width = LDJamGame.GameWidth;
+				opt.Width = PaceMakerGame.GameWidth;
 				opt.Offset.Y = -80 + (80 * index);
 				opt.Height = 80;
 				opt.VerticalAlign = Align.Center;

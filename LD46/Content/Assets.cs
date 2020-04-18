@@ -14,6 +14,7 @@ namespace LD46
 		}
 		public static class SoundEffect
 		{
+			public const string beat = "SoundEffect/beat";
 			public const string dummy = "SoundEffect/dummy";
 		}
 		public static class SpriteFont
@@ -24,6 +25,9 @@ namespace LD46
 		{
 			public const string dummy = "Texture2D/dummy";
 			public const string mainMenuBackground = "Texture2D/mainMenuBackground";
+			public const string player = "Texture2D/player";
+			public const string staticElectricity = "Texture2D/staticElectricity";
+			public const string tile = "Texture2D/tile";
 		}
 	}
 }
