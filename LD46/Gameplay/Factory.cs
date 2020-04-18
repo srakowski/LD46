@@ -28,6 +28,10 @@ namespace LD46.Gameplay
 			//var player = new Player(map)
 			//	.AddToScene(scene);
 
+			new Entity()
+				.AddSprite(Assets.Texture2D.example)
+				.AddToScene(scene);
+
 
 			var player = new Player()
 				.AddToScene(scene);
