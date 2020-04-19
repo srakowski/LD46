@@ -11,6 +11,7 @@ namespace LD46.Gameplay
 {
 	class Level : Entity
 	{
+		public Manager Manager;
 		private Dictionary<Point, Tile> tiles = new Dictionary<Point, Tile>();
 
 		public Level(int width, int height)
@@ -51,6 +52,11 @@ namespace LD46.Gameplay
 			SlimeSpawner.Position = new Vector2(width, 4) * new Vector2(16, 16);
 
 			SlimeActivationTile = tiles[new Point(width - 2, 4)];
+		}
+
+		internal void AddGold(int gold)
+		{
+			Manager.AddGold(gold);
 		}
 
 		public IEnumerable<Tile> Tiles => tiles.Values;

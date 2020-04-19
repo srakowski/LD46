@@ -51,6 +51,7 @@ namespace LD46.Gameplay
 			if (HP <= 0)
 			{
 				Dead = true;
+				level.AddGold(10);
 			}
 		}
 
