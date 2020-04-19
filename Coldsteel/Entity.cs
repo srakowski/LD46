@@ -120,6 +120,15 @@ namespace Coldsteel
 			}
 		}
 
+		internal void Ready()
+		{
+			foreach (var component in _components)
+				component.Ready();
+
+			foreach (var entity in _children.ToArray())
+				entity.Ready();
+		}
+
 		internal void Deactivate()
 		{
 			foreach (var component in _components)

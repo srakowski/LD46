@@ -66,15 +66,15 @@ namespace Coldsteel.Audio
 			continuations.Add(ContinueApply(sei, listeners, emitter));
 		}
 
-		internal void PlaySong(string songName)
+		internal void PlaySong(string songName, bool loop)
 		{
 			var activeScene = Engine.SceneManager.ActiveScene;
 			if (activeScene == null) return;
-			if (ActiveComponents == null) return;
 
 			var song = activeScene.Assets?.FirstOrDefault(a => a.Name == songName) as Asset<Song>;
 			if (song == null || !song.IsLoaded) return;
 
+			MediaPlayer.IsRepeating = loop;
 			MediaPlayer.Play(song.GetValue());
 		}
 

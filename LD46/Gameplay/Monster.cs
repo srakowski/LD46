@@ -8,8 +8,6 @@ namespace LD46.Gameplay
 	{
 		public Monster()
 		{
-			this.AddCamera();
-
 			var sprite = new Sprite(
 				Assets.Texture2D.slime,
 				frameSize: new Size(16, 16)
@@ -21,7 +19,7 @@ namespace LD46.Gameplay
 			.AddToEntity(this);
 
 			Animator = new SpriteAnimator(sprite)
-				.AddSpriteAnimation("idle", (0, 1000), (1, 500))
+				.AddSpriteAnimation("idle", (0, 250), (1, 250))
 				.AddToEntity(this);
 
 			Animator.Animate("idle");

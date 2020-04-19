@@ -52,6 +52,7 @@ namespace Coldsteel
 			ActiveScene?.Deactivate();
 			_pendingScene.Activate(_engine);
 			ActiveScene = _pendingScene;
+			_pendingScene.Ready();
 			_pendingScene = null;
 		}
 	}

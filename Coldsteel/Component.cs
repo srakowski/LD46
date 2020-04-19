@@ -28,6 +28,8 @@ namespace Coldsteel
 
 		private protected virtual void Activated() { }
 
+		private protected virtual void OnReady() { }
+
 		private protected virtual void Deactivated() { }
 
 		internal void Activate(Engine engine, Scene scene, Entity entity)
@@ -36,6 +38,11 @@ namespace Coldsteel
 			Scene = scene;
 			Entity = entity;
 			Activated();
+		}
+
+		internal void Ready()
+		{
+			OnReady();
 		}
 
 		internal void Deactivate()

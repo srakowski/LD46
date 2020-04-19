@@ -41,6 +41,13 @@ namespace LD46.Gameplay
 				.SetPosition(128, 128)
 				.AddToScene(scene);
 
+			new MagicMissile()
+				.AddToScene(scene);
+
+			new Entity()
+				.AddComponent(new GameplayController())
+				.AddToScene(scene);
+
 			return scene;
 		}
 	}

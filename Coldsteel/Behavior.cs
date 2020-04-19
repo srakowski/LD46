@@ -25,6 +25,11 @@ namespace Coldsteel
 			Initialize();
 		}
 
+		private protected override void OnReady()
+		{
+			Start();
+		}
+
 		private protected override void Deactivated()
 		{
 			Engine.BehaviorSystem.RemoveComponent(Scene, this);
@@ -39,6 +44,8 @@ namespace Coldsteel
 		}
 
 		protected virtual void Initialize() { }
+
+		protected virtual void Start() { }
 
 		internal protected virtual void HandleCollision(Collision collision) { }
 
@@ -73,6 +80,16 @@ namespace Coldsteel
 			_coroutines.AddRange(_pendingCoroutines);
 			_pendingCoroutines.Clear();
 			_coroutines.ForEach(c => c.Update(gameTime));
+		}
+
+		public void PlaySong(string name, bool loop = false)
+		{
+			Engine.AudioSystem.PlaySong(name, loop);
+		}
+
+		public void StopSong()
+		{
+			Engine.AudioSystem.StopSong();
 		}
 	}
 }

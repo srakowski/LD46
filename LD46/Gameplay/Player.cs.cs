@@ -21,13 +21,13 @@ namespace LD46.Gameplay
 			.AddToEntity(this);
 
 			Animator = new SpriteAnimator(sprite)
-				.AddSpriteAnimation("idleF", (0, 1000), (1, 1500))
+				.AddSpriteAnimation("idleF", (0, 250), (1, 250))
 				.AddSpriteAnimation("walkF", (2, 200), (3, 200))
-				.AddSpriteAnimation("idleR", (4, 1000), (5, 1500))
+				.AddSpriteAnimation("idleR", (4, 250), (5, 250))
 				.AddSpriteAnimation("walkR", (7, 150), (5, 100), (6, 150))
-				.AddSpriteAnimation("idleL", (8, 1000), (9, 1500))
+				.AddSpriteAnimation("idleL", (8, 250), (9, 250))
 				.AddSpriteAnimation("walkL", (11, 150), (9, 100), (10, 150))
-				.AddSpriteAnimation("idleB", (12, 1000), (13, 1500))
+				.AddSpriteAnimation("idleB", (12, 250), (13, 250))
 				.AddSpriteAnimation("walkB", (14, 200), (15, 200))
 				.AddToEntity(this);
 

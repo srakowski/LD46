@@ -38,7 +38,10 @@ namespace Coldsteel
 		{
 			_entities.Add(entity);
 			if (_engine != null)
+			{
 				entity.Activate(_engine, this, null);
+				entity.Ready();
+			}
 			return this;
 		}
 
@@ -102,6 +105,12 @@ namespace Coldsteel
 
 			foreach (var entity in _entities.ToArray())
 				entity.Activate(engine, this, null);
+		}
+
+		internal void Ready()
+		{
+			foreach (var entity in _entities.ToArray())
+				entity.Ready();
 		}
 
 		internal void Clean()

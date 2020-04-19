@@ -22,8 +22,10 @@ namespace LD46
 		public ButtonControl Left { get; private set; }
 
 		[KeyboardButton(Keys.D)]
-		[KeyboardButton(Keys.Right)]
 		public ButtonControl Right { get; private set; }
+
+		[KeyboardButton(Keys.Right)]
+		public ButtonControl FireRight { get; private set; }
 
 		[KeyboardButton(Keys.Z)]
 		[KeyboardButton(Keys.Enter)]
