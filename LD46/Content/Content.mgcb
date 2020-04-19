@@ -24,18 +24,6 @@
 /processorParam:DebugMode=Auto
 /build:Effect/fade.fx
 
-#begin Song/dummy.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Low
-/build:Song/dummy.mp3
-
-#begin Song/somethingNewIgnoreMe.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Song/somethingNewIgnoreMe.mp3
-
 #begin SoundEffect/dummy.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -150,4 +138,64 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Texture2D/tiles.png
+
+#begin Texture2D/slime.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Texture2D/slime.png
+
+#begin Texture2D/magicMissile.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Texture2D/magicMissile.png
+
+#begin Texture2D/tower.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Texture2D/tower.png
+
+#begin Song/eighty.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Song/eighty.mp3
+
+#begin Texture2D/repeater.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Texture2D/repeater.png
+
+#begin Song/ninety.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Song/ninety.mp3
 

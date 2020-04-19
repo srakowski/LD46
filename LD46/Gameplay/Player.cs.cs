@@ -58,31 +58,39 @@ namespace LD46.Gameplay
 		protected override void Update()
 		{
 			var speed = 0.09f;
+			var idle = true;
+
 			if (controls.Up.IsDown())
 			{
 				player.Position += (new Vector2(0, -1) * speed * (float)GameTime.ElapsedGameTime.TotalMilliseconds);
 				if (d == 'B') player.Animator.Animate("walkB");
 				d = 'B';
+				idle = false;
 			}
 			else if (controls.Down.IsDown())
 			{
 				player.Position += (new Vector2(0, 1) * speed * (float)GameTime.ElapsedGameTime.TotalMilliseconds);
 				if (d == 'F') player.Animator.Animate("walkF");
 				d = 'F';
+				idle = false;
 			}
-			else if (controls.Left.IsDown())
+
+			if (controls.Left.IsDown())
 			{
 				player.Position += (new Vector2(-1, 0) * speed * (float)GameTime.ElapsedGameTime.TotalMilliseconds);
 				if (d == 'L') player.Animator.Animate("walkL");
 				d = 'L';
+				idle = false;
 			}
 			else if (controls.Right.IsDown())
 			{
 				player.Position += (new Vector2(1, 0) * speed * (float)GameTime.ElapsedGameTime.TotalMilliseconds);
 				if (d == 'R') player.Animator.Animate("walkR");
 				d = 'R';
+				idle = false;
 			}
-			else
+
+			if (idle)
 			{
 				player.Animator.Animate($"idle{d}");
 			}

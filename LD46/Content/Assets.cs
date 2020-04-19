@@ -9,8 +9,8 @@ namespace LD46
 		}
 		public static class Song
 		{
-			public const string dummy = "Song/dummy";
-			public const string somethingNewIgnoreMe = "Song/somethingNewIgnoreMe";
+			public const string eighty = "Song/eighty";
+			public const string ninety = "Song/ninety";
 		}
 		public static class SoundEffect
 		{
@@ -26,11 +26,15 @@ namespace LD46
 			public const string dummy = "Texture2D/dummy";
 			public const string example = "Texture2D/example";
 			public const string hero = "Texture2D/hero";
+			public const string magicMissile = "Texture2D/magicMissile";
 			public const string mainMenuBackground = "Texture2D/mainMenuBackground";
 			public const string player = "Texture2D/player";
+			public const string repeater = "Texture2D/repeater";
+			public const string slime = "Texture2D/slime";
 			public const string staticElectricity = "Texture2D/staticElectricity";
 			public const string tile = "Texture2D/tile";
 			public const string tiles = "Texture2D/tiles";
+			public const string tower = "Texture2D/tower";
 		}
 	}
 }

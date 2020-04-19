@@ -37,6 +37,10 @@ namespace LD46.Gameplay
 				.AddToScene(scene);
 
 
+			var monster = new Monster()
+				.SetPosition(128, 128)
+				.AddToScene(scene);
+
 			return scene;
 		}
 	}
