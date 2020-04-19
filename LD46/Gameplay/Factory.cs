@@ -41,10 +41,10 @@ namespace LD46.Gameplay
 			{
 				gt.Value = "150";
 				gt.Font = "Serif";
-				gt.Size = 18;
+				gt.Size = 14;
 				gt.Align = Align.Center;
-				gt.Anchor = Anchor.Center;
-				gt.Origin = Anchor.Center;
+				gt.Anchor = Anchor.TopLeft;
+				gt.Origin = Anchor.TopLeft;
 			});
 
 			var v = new Manager(level, goldText);
