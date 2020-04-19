@@ -117,8 +117,8 @@ namespace LD46.MainMenu
 						Engine.ExitGame();
 					return;
 				}
-				if (_controls.Up.WasPushed()) _idx--;
-				if (_controls.Down.WasPushed()) _idx++;
+				if (_controls.BlueTurret.WasPushed()) _idx--;
+				if (_controls.GreenTower.WasPushed()) _idx++;
 				_idx = MathHelper.Clamp(_idx, 0, _options.Length - 1);
 				UpdateOptions();
 			}

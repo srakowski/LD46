@@ -64,12 +64,12 @@ namespace Coldsteel
 			CutTextureFrames();
 			spriteBatch.Draw(
 				_texture.GetValue(),
-				Entity.Position,
+				Entity.GlobalPosition,
 				SourceRectangle,
 				Color,
-				Entity.Rotation,
+				Entity.GlobalRotation,
 				Origin,
-				Entity.Scale,
+				Entity.GlobalScale,
 				SpriteEffects,
 				LayerDepth
 			);

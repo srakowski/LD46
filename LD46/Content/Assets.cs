@@ -23,13 +23,17 @@ namespace LD46
 		}
 		public static class Texture2D
 		{
+			public const string darktower = "Texture2D/darktower";
 			public const string dummy = "Texture2D/dummy";
 			public const string example = "Texture2D/example";
+			public const string greentower = "Texture2D/greentower";
 			public const string hero = "Texture2D/hero";
 			public const string magicMissile = "Texture2D/magicMissile";
 			public const string mainMenuBackground = "Texture2D/mainMenuBackground";
 			public const string player = "Texture2D/player";
+			public const string redtower = "Texture2D/redtower";
 			public const string repeater = "Texture2D/repeater";
+			public const string selector = "Texture2D/selector";
 			public const string slime = "Texture2D/slime";
 			public const string spawn = "Texture2D/spawn";
 			public const string staticElectricity = "Texture2D/staticElectricity";

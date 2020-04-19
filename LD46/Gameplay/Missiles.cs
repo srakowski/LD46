@@ -7,7 +7,7 @@ namespace LD46.Gameplay
 {
 	class Missile : Entity
 	{
-		public Missile(float speed)
+		public Missile(float speed, Color color)
 		{
 			Speed = speed;
 
@@ -19,6 +19,7 @@ namespace LD46.Gameplay
 				RenderingLayerName = "missiles",
 				FrameIndex = 0,
 				Origin = new Vector2(4, 8),
+				Color = color
 			}
 			.AddToEntity(this);
 

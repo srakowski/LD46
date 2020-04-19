@@ -5,8 +5,8 @@ namespace LD46
 {
 	class TowerDefenseGame : Game
 	{
-		public const int GameWidth = 512;
-		public const int GameHeight = 256;
+		public const int GameWidth = 600;
+		public const int GameHeight = 400;
 
 		private GraphicsDeviceManager _graphics;
 		private Engine _engine;

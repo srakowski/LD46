@@ -3,6 +3,7 @@ using Coldsteel.UI;
 using Coldsteel.UI.Elements;
 using LD46.Gameplay;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 
 namespace LD46.Gameplay
 {
@@ -31,6 +32,12 @@ namespace LD46.Gameplay
 				SpriteSortMode = SpriteSortMode.FrontToBack,
 			});
 
+			scene.AddRenderingLayer(new RenderingLayer("hud", 3)
+			{
+				SamplerState = SamplerState.PointClamp,
+				SpriteSortMode = SpriteSortMode.FrontToBack,
+			});
+
 
 			var level = new Level(24, 16)
 				.AddToScene(scene);
@@ -52,6 +59,8 @@ namespace LD46.Gameplay
 
 			var view = new View();
 			view.AddElement(goldText);
+
+
 
 			//var view = new View(
 			//			var view = View.New.AddElement(
@@ -76,14 +85,29 @@ namespace LD46.Gameplay
 			//	.AddElement(options)
 			//);
 
+			var pickers = new Dictionary<TurretyType, TurretPicker>()
+			{
+				{TurretyType.BlueTurret,  new TurretPicker(TurretyType.BlueTurret) },
+				{TurretyType.Green,  new TurretPicker(TurretyType.Green) },
+				{TurretyType.Red,  new TurretPicker(TurretyType.Red) },
+				{TurretyType.Dark,  new TurretPicker(TurretyType.Dark) },
+			};
+
 			var manager = Entity.New
 				.AddToScene(scene)
 				.AddComponent(v)
 				.AddComponent(c)
-				.AddComponent(new TurretPlacer(level, c))
+				.AddComponent(new TurretPlacer(level, c, pickers))
 				.SetPosition(level.CenterPoint);
 
-			Entity.New.AddToScene(scene).AddComponent(view);
+
+			foreach (var picker in pickers.Values)
+			{
+				manager.AddChild(picker);
+			}
+
+			Entity.New.AddToScene(scene)
+				.AddComponent(view);
 
 			return scene;
 		}

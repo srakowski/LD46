@@ -9,17 +9,17 @@ namespace LD46
 {
 	class Controls
 	{
+		[KeyboardButton(Keys.Q)]
+		public ButtonControl BlueTurret { get; private set; }
+
 		[KeyboardButton(Keys.W)]
-		public ButtonControl Up { get; private set; }
+		public ButtonControl GreenTower { get; private set; }
 
-		[KeyboardButton(Keys.S)]
-		public ButtonControl Down { get; private set; }
+		[KeyboardButton(Keys.E)]
+		public ButtonControl RedTower { get; private set; }
 
-		[KeyboardButton(Keys.A)]
-		public ButtonControl Left { get; private set; }
-
-		[KeyboardButton(Keys.D)]
-		public ButtonControl Right { get; private set; }
+		[KeyboardButton(Keys.R)]
+		public ButtonControl BlackTower { get; private set; }
 
 
 		[KeyboardButton(Keys.Up)]
@@ -42,8 +42,9 @@ namespace LD46
 		[KeyboardButton(Keys.X)]
 		public ButtonControl AltAction { get; private set; }
 
+		[MouseButton(MouseButton.Left)]
 		[MouseButton(MouseButton.Right)]
-		public ButtonControl RightClick { get; private set; }
+		public ButtonControl Click { get; private set; }
 
 		[MousePositional()]
 		public PositionalControl MouseClickLocation { get; private set; }

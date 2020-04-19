@@ -92,14 +92,14 @@ namespace LD46.GameplayOld
 			var speed = 0.09f;
 			var idle = true;
 
-			if (controls.Up.IsDown())
+			if (controls.BlueTurret.IsDown())
 			{
 				player.Position += (new Vector2(0, -1) * speed * (float)GameTime.ElapsedGameTime.TotalMilliseconds);
 				if (d == 'B') player.Animator.Animate("walkB");
 				d = 'B';
 				idle = false;
 			}
-			else if (controls.Down.IsDown())
+			else if (controls.GreenTower.IsDown())
 			{
 				player.Position += (new Vector2(0, 1) * speed * (float)GameTime.ElapsedGameTime.TotalMilliseconds);
 				if (d == 'F') player.Animator.Animate("walkF");
@@ -107,14 +107,14 @@ namespace LD46.GameplayOld
 				idle = false;
 			}
 
-			if (controls.Left.IsDown())
+			if (controls.RedTower.IsDown())
 			{
 				player.Position += (new Vector2(-1, 0) * speed * (float)GameTime.ElapsedGameTime.TotalMilliseconds);
 				if (d == 'L') player.Animator.Animate("walkL");
 				d = 'L';
 				idle = false;
 			}
-			else if (controls.Right.IsDown())
+			else if (controls.BlackTower.IsDown())
 			{
 				player.Position += (new Vector2(1, 0) * speed * (float)GameTime.ElapsedGameTime.TotalMilliseconds);
 				if (d == 'R') player.Animator.Animate("walkR");
