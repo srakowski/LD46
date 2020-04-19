@@ -1,21 +1,20 @@
 ﻿using Coldsteel;
 using Coldsteel.Animations;
 using Microsoft.Xna.Framework;
+using Roy_T.AStar.Grids;
+using Roy_T.AStar.Paths;
 using Roy_T.AStar.Primitives;
-using System;
 using System.Collections;
 using System.Linq;
-using ToySize = Roy_T.AStar.Primitives.Size;
-using CSSize = Coldsteel.Size;
-using Roy_T.AStar.Grids;
 using static LD46.Gameplay.Level;
-using Roy_T.AStar.Paths;
+using CSSize = Coldsteel.Size;
 
 namespace LD46.Gameplay
 {
 	class Slime : Entity
 	{
 		private Level level;
+		private SlimeBehavior behavior;
 
 		public Slime(Level level, float depth)
 		{
@@ -38,8 +37,10 @@ namespace LD46.Gameplay
 
 			animator.Animate("idle");
 
-			new SlimeBehavior(this, level).AddToEntity(this);
+			behavior = new SlimeBehavior(this, level).AddToEntity(this);
 		}
+
+		public Tile Target => behavior.Target;
 
 		private class SlimeBehavior : Behavior
 		{
@@ -47,7 +48,7 @@ namespace LD46.Gameplay
 
 			private Slime slime;
 			private Level level;
-			private Level.Tile target;
+			public Level.Tile Target;
 
 			public SlimeBehavior(Slime slime, Level level)
 			{
@@ -57,7 +58,7 @@ namespace LD46.Gameplay
 
 			protected override void Start()
 			{
-				this.target = level.SlimeActivationTile;
+				this.Target = level.SlimeActivationTile;
 				StartCoroutine(MoveToTarget());
 			}
 
@@ -65,9 +66,9 @@ namespace LD46.Gameplay
 			{
 				while (true)
 				{
-					while (Vector2.Distance(this.Entity.Position, target.Position) > 0.5f)
+					while (Vector2.Distance(this.Entity.Position, Target.Position) > 0.5f)
 					{
-						var direction = target.Position - this.Entity.Position;
+						var direction = Target.Position - this.Entity.Position;
 						direction.Normalize();
 						var velocity = direction * speed;
 						Entity.Position += velocity * (float)GameTime.ElapsedGameTime.TotalMilliseconds;
@@ -81,7 +82,7 @@ namespace LD46.Gameplay
 						// HIT
 						yield break;
 					}
-					target = nextTarget;
+					Target = nextTarget;
 				}
 			}
 
@@ -91,7 +92,7 @@ namespace LD46.Gameplay
 
 				var pathFinder = new PathFinder();
 				var path = pathFinder.FindPath(
-					new GridPosition(target.MapPosition.X, target.MapPosition.Y),
+					new GridPosition(Target.MapPosition.X, Target.MapPosition.Y),
 					new GridPosition(level.TargetSlimeTile.MapPosition.X, level.TargetSlimeTile.MapPosition.Y),
 					grid
 				);

@@ -38,6 +38,7 @@ namespace LD46.Gameplay
 				if (tile == null) return;
 				if (!tile.IsTraversable) return;
 				if (tile.occupant is TargetSlime) return;
+				if (Scene.Entities.OfType<Slime>().Any(s => s.Target == tile)) return;
 
 				var grid = level.GetGrid();
 				var nodePos = new GridPosition(tile.MapPosition.X, tile.MapPosition.Y);
