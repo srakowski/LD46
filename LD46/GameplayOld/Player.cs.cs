@@ -1,15 +1,15 @@
 ﻿using Coldsteel;
 using Coldsteel.Animations;
 using Microsoft.Xna.Framework;
+using System;
+using System.Linq;
 
-namespace LD46.Gameplay
+namespace LD46.GameplayOld
 {
 	class Player : Entity
 	{
-		public Player()
+		public Player(Camera camera, Map map)
 		{
-			this.AddCamera();
-
 			var sprite = new Sprite(
 				Assets.Texture2D.hero,
 				frameSize: new Size(16, 16)
@@ -33,21 +33,29 @@ namespace LD46.Gameplay
 
 			Animator.Animate("idleF");
 
-			new PlayerController(this).AddToEntity(this);
+			MissileSpawner = new MissileSpawner(300).AddToEntity(this);
+
+			new PlayerController(this, camera, map).AddToEntity(this);
 		}
 
 		public SpriteAnimator Animator { get; }
+
+		public MissileSpawner MissileSpawner { get; }
 	}
 
 	internal class PlayerController : Behavior
 	{
 		private Player player;
+		private Camera camera;
 		private Controls controls;
 		private char d = 'F';
+		private Map map;
 
-		public PlayerController(Player player)
+		public PlayerController(Player player, Camera camera, Map map)
 		{
 			this.player = player;
+			this.camera = camera;
+			this.map = map;
 		}
 
 		protected override void Initialize()
@@ -57,6 +65,30 @@ namespace LD46.Gameplay
 
 		protected override void Update()
 		{
+			//if (controls.PlayerMove.WasPushed())
+			//{
+			//	var target = controls.PlayerMoveLocation.GetPosition();
+			//	player.Position = camera.ToWorldCoords(ScreenToView(target));
+			//}
+
+			//var speed = 0.09f;
+			//if (controls.Up.IsDown())
+			//{
+			//	camera.Entity.Position += (new Vector2(0, -1) * speed * (float)GameTime.ElapsedGameTime.TotalMilliseconds);
+			//}
+			//if (controls.Down.IsDown())
+			//{
+			//	camera.Entity.Position += (new Vector2(0, 1) * speed * (float)GameTime.ElapsedGameTime.TotalMilliseconds);
+			//}
+			//if (controls.Left.IsDown())
+			//{
+			//	camera.Entity.Position += (new Vector2(-1, 0) * speed * (float)GameTime.ElapsedGameTime.TotalMilliseconds);
+			//}
+			//if (controls.Right.IsDown())
+			//{
+			//	camera.Entity.Position += (new Vector2(1, 0) * speed * (float)GameTime.ElapsedGameTime.TotalMilliseconds);
+			//}
+
 			var speed = 0.09f;
 			var idle = true;
 
@@ -90,10 +122,33 @@ namespace LD46.Gameplay
 				idle = false;
 			}
 
+
+			if (controls.Fire.IsDown())
+			{
+				if (spawnMissile == null) spawnMissile = SpawnMissile;
+				player.MissileSpawner.Spawn(spawnMissile);
+			}
+
+			//if (controls.CenterPlayer.IsDown())
+			//{
+				camera.Entity.Position = player.Position.ToPoint().ToVector2();
+			//}
+
 			if (idle)
 			{
 				player.Animator.Animate($"idle{d}");
 			}
+		}
+
+		private Func<Missile> spawnMissile;
+
+		private Missile SpawnMissile()
+		{
+			var target = Scene.Entities.OfType<Slime>()
+				.OrderBy(m => Vector2.Distance(m.Position, Entity.Position))
+				.FirstOrDefault();
+			if (target == null) return null;
+			return new Missile(player.Position, target, Missile.BasicSpeed, 8);
 		}
 	}
 }

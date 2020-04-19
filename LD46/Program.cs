@@ -6,7 +6,7 @@ namespace LD46
 	{
 		static void Main(string[] args)
 		{
-			using (var game = new PaceMakerGame())
+			using (var game = new TowerDefenseGame())
 				game.Run();
 		}
 	}

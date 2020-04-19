@@ -15,7 +15,7 @@ namespace LD46.MainMenu
 		const string SETTINGS = "Settings";
 		const string EXIT = "Exit";
 
-		public static Scene Create(PaceMakerGameState gameState)
+		public static Scene Create(TowerDefenseGameState gameState)
 		{
 			var scene = new Scene();
 			scene.AddAssetsFromDirectory(@"./Content");
@@ -52,7 +52,7 @@ namespace LD46.MainMenu
 						title.Align = Align.Center;
 						title.Anchor = Anchor.Center;
 						title.Offset.Y = -200;
-						title.Width = PaceMakerGame.GameWidth;
+						title.Width = TowerDefenseGame.GameWidth;
 						title.Origin = Anchor.Center;
 					})
 				)
@@ -77,7 +77,7 @@ namespace LD46.MainMenu
 				opt.Align = Align.Center;
 				opt.Anchor = Anchor.Center;
 				opt.Origin = Anchor.Center;
-				opt.Width = PaceMakerGame.GameWidth;
+				opt.Width = TowerDefenseGame.GameWidth;
 				opt.Offset.Y = -80 + (80 * index);
 				opt.Height = 80;
 				opt.VerticalAlign = Align.Center;
@@ -112,7 +112,7 @@ namespace LD46.MainMenu
 				if (_controls.Action.WasPushed())
 				{
 					if (_options[_idx].Value == PLAY)
-						StartCoroutine(FadeOutThen(() => Engine.LoadScene(nameof(Gameplay), _gameState)));
+						StartCoroutine(FadeOutThen(() => Engine.LoadScene(nameof(GameplayOld), _gameState)));
 					if (_options[_idx].Value == EXIT)
 						Engine.ExitGame();
 					return;

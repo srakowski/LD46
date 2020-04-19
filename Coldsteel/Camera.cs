@@ -25,8 +25,8 @@ namespace Coldsteel
 			Matrix.CreateScale(Entity.GlobalScale) *
 			Matrix.CreateTranslation(-Entity.GlobalPosition.X, -Entity.GlobalPosition.Y, 0f) *
 			Matrix.CreateTranslation(
-				(Engine.Game.GraphicsDevice.Viewport.Width * 0.5f),
-				(Engine.Game.GraphicsDevice.Viewport.Height * 0.5f),
+				(Engine.Config.ScreenDim.Width * 0.5f),
+				(Engine.Config.ScreenDim.Height * 0.5f),
 				0f);
 
 		private protected override void Activated()

@@ -10,22 +10,30 @@ namespace LD46
 	class Controls
 	{
 		[KeyboardButton(Keys.W)]
-		[KeyboardButton(Keys.Up)]
 		public ButtonControl Up { get; private set; }
 
 		[KeyboardButton(Keys.S)]
-		[KeyboardButton(Keys.Down)]
 		public ButtonControl Down { get; private set; }
 
 		[KeyboardButton(Keys.A)]
-		[KeyboardButton(Keys.Left)]
 		public ButtonControl Left { get; private set; }
 
 		[KeyboardButton(Keys.D)]
 		public ButtonControl Right { get; private set; }
 
+
+		[KeyboardButton(Keys.Up)]
+		public ButtonControl ShootUp { get; private set; }
+
+		[KeyboardButton(Keys.Down)]
+		public ButtonControl ShootDown { get; private set; }
+
+		[KeyboardButton(Keys.Left)]
+		public ButtonControl ShootLeft { get; private set; }
+
 		[KeyboardButton(Keys.Right)]
-		public ButtonControl FireRight { get; private set; }
+		public ButtonControl ShootRight { get; private set; }
+
 
 		[KeyboardButton(Keys.Z)]
 		[KeyboardButton(Keys.Enter)]
@@ -33,6 +41,15 @@ namespace LD46
 
 		[KeyboardButton(Keys.X)]
 		public ButtonControl AltAction { get; private set; }
+
+		[MouseButton(MouseButton.Right)]
+		public ButtonControl RightClick { get; private set; }
+
+		[MousePositional()]
+		public PositionalControl MouseClickLocation { get; private set; }
+
+		[KeyboardButton(Keys.Space)]
+		public ButtonControl Fire { get; private set; }
 
 		public static Controls Map(Behavior behavior)
 		{
@@ -86,6 +103,39 @@ namespace LD46
 			var bc = c as ButtonControl;
 			if (bc == null) return;
 			bc.AddBinding(new KeyboardButtonControlBinding(Key));
+		}
+	}
+
+	[AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
+	class MouseButtonAttribute : BindingAttribute
+	{
+		public MouseButtonAttribute(MouseButton button)
+		{
+			Button = button;
+		}
+
+		public MouseButton Button { get; }
+
+		public override void Bind(Control c)
+		{
+			var bc = c as ButtonControl;
+			if (bc == null) return;
+			bc.AddBinding(new MouseButtonControlBinding(Button));
+		}
+	}
+
+	[AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
+	class MousePositionalAttribute : BindingAttribute
+	{
+		public MousePositionalAttribute()
+		{
+		}
+
+		public override void Bind(Control c)
+		{
+			var bc = c as PositionalControl;
+			if (bc == null) return;
+			bc.AddBinding(new MousePositionalControlBinding());
 		}
 	}
 }

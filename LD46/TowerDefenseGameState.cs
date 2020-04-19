@@ -2,7 +2,7 @@
 
 namespace LD46
 {
-	class PaceMakerGameState : GameState
+	class TowerDefenseGameState : GameState
 	{
 	}
 }

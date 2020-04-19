@@ -4,12 +4,12 @@ using Microsoft.Xna.Framework;
 
 namespace LD46.Gameplay
 {
-	class Monster : Entity
+	class TargetSlime : Entity
 	{
-		public Monster()
+		public TargetSlime()
 		{
 			var sprite = new Sprite(
-				Assets.Texture2D.slime,
+				Assets.Texture2D.targetslime,
 				frameSize: new Size(16, 16)
 			)
 			{
@@ -18,13 +18,11 @@ namespace LD46.Gameplay
 			}
 			.AddToEntity(this);
 
-			Animator = new SpriteAnimator(sprite)
+			var animator = new SpriteAnimator(sprite)
 				.AddSpriteAnimation("idle", (0, 250), (1, 250))
 				.AddToEntity(this);
 
-			Animator.Animate("idle");
+			animator.Animate("idle");
 		}
-
-		public SpriteAnimator Animator { get; }
 	}
 }

@@ -1,6 +1,6 @@
 ﻿using Coldsteel;
 
-namespace LD46.Gameplay
+namespace LD46.GameplayOld
 {
 	class GameplayController : Behavior
 	{

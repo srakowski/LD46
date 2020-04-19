@@ -31,7 +31,7 @@ namespace Coldsteel
 		public RasterizerState RasterizerState;
 
 		public Matrix? TransformMatrix;
-	
+
 		public Shader Shader { get; private set; }
 
 		public RenderingLayer SetShader(Shader shader)

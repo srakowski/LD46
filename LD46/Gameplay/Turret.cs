@@ -5,29 +5,30 @@ using System.Linq;
 
 namespace LD46.Gameplay
 {
-	class MagicMissile : Entity
+	class Turret : Entity
 	{
-		public MagicMissile()
+		public Turret()
 		{
 			var sprite = new Sprite(
-				Assets.Texture2D.magicMissile,
-				frameSize: new Size(8, 16)
+				Assets.Texture2D.tower,
+				frameSize: new Size(12, 12)
 			)
 			{
 				FrameIndex = 0,
-				Origin = new Vector2(4, 8),
+				Origin = new Vector2(6, 6),
 			}
 			.AddToEntity(this);
 
-			var frames = Enumerable.Range(0, 6)
+			var frames = Enumerable.Range(1, 5)
 				.Select(i => new Frame(i, 60))
 				.ToArray();
 
 			Animator = new SpriteAnimator(sprite)
-				.AddSpriteAnimation("fire", frames)
+				.AddSpriteAnimation("idle", (0, 0))
+				.AddSpriteAnimation("shimmer", frames)
 				.AddToEntity(this);
 
-			Animator.Animate("fire");
+			Animator.Animate("shimmer");
 		}
 
 		public SpriteAnimator Animator { get; }

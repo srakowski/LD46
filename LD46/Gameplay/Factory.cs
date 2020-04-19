@@ -1,11 +1,12 @@
 ﻿using Coldsteel;
+using LD46.Gameplay;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace LD46.Gameplay
 {
 	static class Factory
 	{
-		public static Scene Create(PaceMakerGameState gameState)
+		public static Scene Create(TowerDefenseGameState gameState)
 		{
 			var scene = new Scene();
 			scene.AddAssetsFromDirectory(@"./Content");
@@ -16,37 +17,23 @@ namespace LD46.Gameplay
 				SamplerState = SamplerState.PointClamp,
 			});
 
+			scene.AddRenderingLayer(new RenderingLayer("slimes", 1)
+			{
+				SamplerState = SamplerState.PointClamp,
+				SpriteSortMode = SpriteSortMode.FrontToBack,
+			});
 
-			//var map = new Map()
-			//	.AddToScene(scene)
-			//	.AddChild(
-			//		Entity.New
-			//			.SetPosition((Map.MapDimX * Tile.TileDim) * 0.5f, (Map.MapDimY * Tile.TileDim) * 0.5f)
-			//			.AddCamera()
-			//	);
-
-			//var player = new Player(map)
-			//	.AddToScene(scene);
-
-			new Entity()
-				.AddSprite(Assets.Texture2D.example)
+			var level = new Level(16, 12)
 				.AddToScene(scene);
 
+			var c = new Camera();
 
-			var player = new Player()
-				.AddToScene(scene);
-
-
-			var monster = new Monster()
-				.SetPosition(128, 128)
-				.AddToScene(scene);
-
-			new MagicMissile()
-				.AddToScene(scene);
-
-			new Entity()
-				.AddComponent(new GameplayController())
-				.AddToScene(scene);
+			var manager = Entity.New
+				.AddToScene(scene)
+				.AddComponent(new Manager(level))
+				.AddComponent(c)
+				.AddComponent(new TurretPlacer(level, c))
+				.SetPosition(level.CenterPoint);
 
 			return scene;
 		}

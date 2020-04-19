@@ -22,6 +22,11 @@ namespace Coldsteel
 
 		private Engine _engine;
 
+		public object SetPosition(object centerPoint)
+		{
+			throw new NotImplementedException();
+		}
+
 		private Scene _scene;
 
 		private Entity _parent;

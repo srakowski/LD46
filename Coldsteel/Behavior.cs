@@ -4,6 +4,7 @@
 
 using Coldsteel.Controls;
 using Microsoft.Xna.Framework;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -65,6 +66,11 @@ namespace Coldsteel
 				throw new System.Exception($"control not defined: {name}");
 
 			return Engine.Config.Controls[name] as TControl;
+		}
+
+		public Vector2 ScreenToView(Vector2 target)
+		{
+			return Engine.RenderingSystem.PointToScreen(target.ToPoint()).ToVector2();
 		}
 
 		protected Coroutine StartCoroutine(IEnumerator routine)

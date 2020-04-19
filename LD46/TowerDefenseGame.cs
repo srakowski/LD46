@@ -3,15 +3,15 @@ using Microsoft.Xna.Framework;
 
 namespace LD46
 {
-	class PaceMakerGame : Game
+	class TowerDefenseGame : Game
 	{
-		public const int GameWidth = 400;
-		public const int GameHeight = 300;
+		public const int GameWidth = 512;
+		public const int GameHeight = 256;
 
 		private GraphicsDeviceManager _graphics;
 		private Engine _engine;
 
-		public PaceMakerGame()
+		public TowerDefenseGame()
 		{
 			_graphics = new GraphicsDeviceManager(this)
 			{
@@ -40,7 +40,7 @@ namespace LD46
 			base.Initialize();
 			_engine.LoadScene(
 				nameof(Gameplay),
-				new PaceMakerGameState()
+				new TowerDefenseGameState()
 			);
 		}
 	}

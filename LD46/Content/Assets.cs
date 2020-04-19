@@ -31,7 +31,9 @@ namespace LD46
 			public const string player = "Texture2D/player";
 			public const string repeater = "Texture2D/repeater";
 			public const string slime = "Texture2D/slime";
+			public const string spawn = "Texture2D/spawn";
 			public const string staticElectricity = "Texture2D/staticElectricity";
+			public const string targetslime = "Texture2D/targetslime";
 			public const string tile = "Texture2D/tile";
 			public const string tiles = "Texture2D/tiles";
 			public const string tower = "Texture2D/tower";
