@@ -15,8 +15,9 @@ namespace LD46.Gameplay
 	{
 		private Level level;
 		private SlimeBehavior behavior;
+		private int HP;
 
-		public Slime(Level level, float depth)
+		public Slime(Level level, float depth, int rank)
 		{
 			this.level = level;
 			var sprite = new Sprite(
@@ -38,14 +39,23 @@ namespace LD46.Gameplay
 			animator.Animate("idle");
 
 			behavior = new SlimeBehavior(this, level).AddToEntity(this);
+
+			HP = (int)((rank + 1) * Settings.HPMultiplier);
 		}
 
 		public Tile Target => behavior.Target;
 
+		internal void Hit(int dmg)
+		{
+			HP -= dmg;
+			if (HP <= 0)
+			{
+				Dead = true;
+			}
+		}
+
 		private class SlimeBehavior : Behavior
 		{
-			const float speed = 0.02f;
-
 			private Slime slime;
 			private Level level;
 			public Level.Tile Target;
@@ -70,7 +80,7 @@ namespace LD46.Gameplay
 					{
 						var direction = Target.Position - this.Entity.Position;
 						direction.Normalize();
-						var velocity = direction * speed;
+						var velocity = direction * Settings.SlimeSpeed;
 						Entity.Position += velocity * (float)GameTime.ElapsedGameTime.TotalMilliseconds;
 						yield return Wait.None();
 					}

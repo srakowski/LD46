@@ -23,6 +23,13 @@ namespace LD46.Gameplay
 				SpriteSortMode = SpriteSortMode.FrontToBack,
 			});
 
+			scene.AddRenderingLayer(new RenderingLayer("missiles", 2)
+			{
+				SamplerState = SamplerState.PointClamp,
+				SpriteSortMode = SpriteSortMode.FrontToBack,
+			});
+
+
 			var level = new Level(16, 12)
 				.AddToScene(scene);
 

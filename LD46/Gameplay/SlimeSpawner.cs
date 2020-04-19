@@ -19,7 +19,7 @@ namespace LD46.Gameplay
 			this.behavior = new SpawnBehavior(level).AddToEntity(this);
 		}
 
-		public void SpawnWave(int numberOfSlimes) => behavior.SpawnWave(numberOfSlimes);
+		public void SpawnWave(int numberOfSlimes, int level) => behavior.SpawnWave(numberOfSlimes, level);
 
 		public class SpawnBehavior : Behavior
 		{
@@ -30,23 +30,23 @@ namespace LD46.Gameplay
 				this.level = level;
 			}
 
-			public void SpawnWave(int numberOfSlimes)
+			public void SpawnWave(int numberOfSlimes, int rank)
 			{
-				StartCoroutine(BeginSpawnWave(numberOfSlimes));
+				StartCoroutine(BeginSpawnWave(numberOfSlimes, rank));
 			}
 
-			private IEnumerator BeginSpawnWave(int numberOfSlimes)
+			private IEnumerator BeginSpawnWave(int numberOfSlimes, int rank)
 			{
 				for (int i = 0; i < numberOfSlimes; i++)
 				{
-					SpawnSlime(1.0f / ((float)i + 1));
+					SpawnSlime(1.0f / ((float)i + 1), rank);
 					yield return Wait.Duration(800);
 				}
 			}
 
-			private void SpawnSlime(float depth)
+			private void SpawnSlime(float depth, int rank)
 			{
-				new Slime(level, depth)
+				new Slime(level, depth, rank)
 					.SetPosition(this.Entity.Position)
 					.AddToScene(Scene);
 			}

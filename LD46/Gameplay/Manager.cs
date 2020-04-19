@@ -20,10 +20,10 @@ namespace LD46.Gameplay
 
 		private IEnumerator RunGame()
 		{
-			for (int i = 0; i < 1; i++)
+			for (int i = 0; i < 10; i++)
 			{
-				yield return Wait.Duration(3000);
-				level.SlimeSpawner.SpawnWave(10);
+				level.SlimeSpawner.SpawnWave(6 * (i + 1), i);
+				yield return Wait.Duration(30000);
 			}
 		}
 	}
