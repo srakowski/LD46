@@ -58,12 +58,19 @@ namespace LD46.Gameplay
 				turretType = TurretyType.Dark;
 			}
 
-			foreach (var p in pickers.Values) p.Selected = false;
+			foreach (var tt in pickers.Keys)
+			{
+				var p = pickers[tt];
+				p.Selected = false;
+				p.SetColor(level.CanBuy(GetCost(tt)) ? Color.White : Color.Red);
+			}
 			pickers[turretType].Selected = true;
 
-			foreach (var p in visualTurrets.Values)
+			foreach (var tt in visualTurrets.Keys)
 			{
-				p.GetComponent<Sprite>().Enabled = false;
+				var vt = visualTurrets[tt];
+				var s = vt.GetComponent<Sprite>();
+				s.Enabled = false;
 			}
 
 			var target = controls.MouseClickLocation.GetPosition();
@@ -71,7 +78,10 @@ namespace LD46.Gameplay
 			var mapPos = (clickPosition / new Vector2(16f, 16f)).ToPoint();
 			var tile = level.GetTileAt(mapPos);
 
-			var tileTargetable = tile != null && tile.IsTraversable && !(tile.occupant is TargetSlime) && !Scene.Entities.OfType<Slime>().Any(s => s.Target == tile);
+			var tileTargetable = tile != null &&
+				(tile.IsTraversable || (tile.occupant is Turret t && (int)t.turretType < (int)turretType)) &&
+				!(tile.occupant is TargetSlime) &&
+				!Scene.Entities.OfType<Slime>().Any(s => s.Target == tile);
 
 			if (!tileTargetable) return;
 
@@ -96,12 +106,26 @@ namespace LD46.Gameplay
 			visualTurrets[turretType].GetComponent<Sprite>().Enabled = true;
 			visualTurrets[turretType].Position = tile.Position;
 
-			if (controls.Click.WasPushed())
+			int turretCost = GetCost(turretType);
+
+			visualTurrets[turretType].GetComponent<Sprite>().Color = !level.CanBuy(turretCost) ? Color.Red : Color.Lime;
+
+			if (controls.Click.WasPushed() && level.CanBuy(turretCost))
 			{
+				level.Buy(turretCost);
 				var turret = new Turret(turretType);
 				Scene.AddEntity(turret);
 				tile.SetOccupant(turret);
 			}
+		}
+
+		private static int GetCost(TurretyType turretType)
+		{
+			return turretType == TurretyType.BlueTurret ? Settings.BlueCost :
+				turretType == TurretyType.Green ? Settings.GreenCost :
+				turretType == TurretyType.Red ? Settings.RedCost :
+				turretType == TurretyType.Dark ? Settings.BlackCost :
+				0;
 		}
 	}
 }

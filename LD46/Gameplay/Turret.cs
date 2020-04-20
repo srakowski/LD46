@@ -1,6 +1,7 @@
 ﻿using Coldsteel;
 using Coldsteel.Animations;
 using Microsoft.Xna.Framework;
+using System;
 using System.Linq;
 
 namespace LD46.Gameplay
@@ -15,7 +16,7 @@ namespace LD46.Gameplay
 
 	class Turret : Entity
 	{
-		private TurretyType turretType;
+		public TurretyType turretType { get; }
 		public bool Demo { get; }
 
 		public Turret(TurretyType type, bool demo = false)
@@ -51,12 +52,18 @@ namespace LD46.Gameplay
 
 			if (!demo)
 			{
-				new MissileSpawner(Settings.TurretFireFreq,
+				new MissileSpawner(
+					turretType == TurretyType.BlueTurret ? Settings.BlueROF :
+					turretType == TurretyType.Green ? Settings.GreenROF :
+					turretType == TurretyType.Red ? Settings.RedROF :
+					turretType == TurretyType.Dark ? Settings.BlackROF :
+					0
+					,
 					turretType == TurretyType.BlueTurret ? Color.White :
 					turretType == TurretyType.Green ? Color.LightGreen :
 					turretType == TurretyType.Red ? Color.Red :
 					turretType == TurretyType.Dark ? Color.Gray :
-					Color.White).AddToEntity(this);
+					Color.White, turretType).AddToEntity(this);
 			}
 		}
 
@@ -67,12 +74,26 @@ namespace LD46.Gameplay
 			private int freq;
 			private double timeSinceLastFire;
 			private Color color;
+			private TurretyType turretType;
+			private int range = 0;
 
 			public static float BasicSpeed => 0.2f;
 
-			public MissileSpawner(int freq, Color color)
+			public MissileSpawner(int freq, Color color, TurretyType type)
 			{
-				this.freq = freq;
+				this.turretType = type;
+				this.freq = turretType == TurretyType.BlueTurret ? Settings.BlueROF :
+						turretType == TurretyType.Green ? Settings.GreenROF :
+						turretType == TurretyType.Red ? Settings.RedROF :
+						turretType == TurretyType.Dark ? Settings.BlackROF :
+						0;
+
+				this.range = turretType == TurretyType.BlueTurret ? Settings.BlueRange :
+						turretType == TurretyType.Green ? Settings.GreenRange :
+						turretType == TurretyType.Red ? Settings.RedRange :
+						turretType == TurretyType.Dark ? Settings.BlackRange :
+						0;
+
 				this.color = color;
 			}
 
@@ -88,7 +109,7 @@ namespace LD46.Gameplay
 
 				var target = Scene.Entities.OfType<Slime>()
 					.Select(c => new { E=c, D = Vector2.Distance(c.Position, Entity.Position)})
-					.Where(c => c.D < Settings.TurretDistance)
+					.Where(c => c.D < range)
 					.OrderBy(c => c.D)
 					.Select(c => c.E)
 					.FirstOrDefault();
@@ -97,7 +118,13 @@ namespace LD46.Gameplay
 
 				var missile = new Missile(BasicSpeed, color);
 				missile.Position = this.Entity.Position;
-				missile.AddComponent(new SeekingMissileBehavior(missile, target, 8));
+				missile.AddComponent(new SeekingMissileBehavior(missile, target, 8,
+						turretType == TurretyType.BlueTurret ? Settings.BlueDamage :
+						turretType == TurretyType.Green ? Settings.GreenDamage :
+						turretType == TurretyType.Red ? Settings.RedDamage :
+						turretType == TurretyType.Dark ? Settings.BlackDamage :
+						0
+					));
 				
 				if (missile == null) return;
 				timeSinceLastFire = 0;
@@ -110,12 +137,14 @@ namespace LD46.Gameplay
 			private Missile missile;
 			private Slime target;
 			private int hitRadius;
+			public int dmg;
 
-			public SeekingMissileBehavior(Missile missile, Slime target, int hitRadius)
+			public SeekingMissileBehavior(Missile missile, Slime target, int hitRadius, int dmg)
 			{
 				this.missile = missile;
 				this.target = target;
 				this.hitRadius = hitRadius;
+				this.dmg = dmg;
 			}
 
 			protected override void Update()
@@ -128,7 +157,7 @@ namespace LD46.Gameplay
 
 				if (Vector2.Distance(target.Position, missile.Position) < hitRadius)
 				{
-					target.Hit(1);
+					target.Hit(dmg);
 					missile.Dead = true;
 					return;
 				}
@@ -144,9 +173,11 @@ namespace LD46.Gameplay
 
 	class TurretPicker : Entity
 	{
+		private Turret turret;
+
 		public TurretPicker(TurretyType type)
 		{
-			var turret = new Turret(type, true);
+			turret = new Turret(type, true);
 			turret.Scale = 2.0f;
 			this.Position =
 				type == TurretyType.BlueTurret ? new Vector2(-64, 160) :
@@ -171,5 +202,11 @@ namespace LD46.Gameplay
 
 
 		public Sprite Sprite { get; }
+
+		internal void SetColor(Color color)
+		{
+			Sprite.Color = color;
+			turret.GetComponent<Sprite>().Color = color;
+		}
 	}
 }

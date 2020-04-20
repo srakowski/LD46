@@ -4,15 +4,15 @@ using Coldsteel;
 using Coldsteel.Audio;
 using Coldsteel.UI;
 using Coldsteel.UI.Elements;
+using LD46.MainMenu;
 using LD46.Shaders;
 using Microsoft.Xna.Framework;
 
-namespace LD46.MainMenu
+namespace LD46.GameOver
 {
 	static class Factory
 	{
-		const string PLAY = "Play";
-		const string SETTINGS = "Settings";
+		const string PLAY = "Play Again";
 		const string EXIT = "Exit";
 
 		public static Scene Create(TowerDefenseGameState gameState)
@@ -41,9 +41,9 @@ namespace LD46.MainMenu
 				.AddElement(
 					Text.New.Configure(title =>
 					{
-						title.Value = "A SLIME DEFENSE";
+						title.Value = "GAME OVER!";
 						title.Font = "Serif";
-						title.Size = 32;
+						title.Size = 24;
 						title.Align = Align.Center;
 						title.Anchor = Anchor.Center;
 						title.Offset.Y = -100;
@@ -62,7 +62,6 @@ namespace LD46.MainMenu
 
 			return scene;
 		}
-
 
 		private static Text CreateMenuOption(string value, int index)
 		{
@@ -91,7 +90,7 @@ namespace LD46.MainMenu
 			private Fade _fade;
 
 			public MenuController(Text[] options, GameState gameState, Fade fade)
-			{ 
+			{
 				_options = options;
 				_gameState = gameState;
 				_fade = fade;
@@ -154,14 +153,6 @@ namespace LD46.MainMenu
 					opt.Bold = false;
 				}
 			}
-		}
-	}
-
-	class PlayIt : Behavior
-	{
-		protected override void Start()
-		{
-			PlaySong(Assets.Song.eighty, loop: true);
 		}
 	}
 }

@@ -91,6 +91,11 @@ namespace LD46.Gameplay
 			return tilesFrame;
 		}
 
+		internal void ReducePurity(int v)
+		{
+			Manager.ReducePurity(v);
+		}
+
 		internal Grid GetGrid()
 		{
 			var gridSize = new GridSize(columns: Columns, rows: Rows);
@@ -107,6 +112,13 @@ namespace LD46.Gameplay
 			}
 
 			return grid;
+		}
+
+		internal bool CanBuy(int cost) { return Manager.Gold > cost; }
+
+		internal void Buy(int cost)
+		{
+			Manager.Buy(cost);
 		}
 
 		internal Tile GetTileAt(Point mapPos) => tiles.TryGetValue(mapPos, out var tile) ? tile : null;

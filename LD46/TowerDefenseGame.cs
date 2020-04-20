@@ -39,7 +39,7 @@ namespace LD46
 		{
 			base.Initialize();
 			_engine.LoadScene(
-				nameof(Gameplay),
+				nameof(MainMenu),
 				new TowerDefenseGameState()
 			);
 		}

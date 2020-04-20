@@ -40,7 +40,7 @@ namespace LD46.Gameplay
 				for (int i = 0; i < numberOfSlimes; i++)
 				{
 					SpawnSlime(1.0f / ((float)i + 1), rank);
-					yield return Wait.Duration(800);
+					yield return Wait.Duration(600);
 				}
 			}
 

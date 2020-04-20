@@ -23,9 +23,11 @@ namespace LD46
 
 
 		[KeyboardButton(Keys.Up)]
+		[KeyboardButton(Keys.W)]
 		public ButtonControl ShootUp { get; private set; }
 
 		[KeyboardButton(Keys.Down)]
+		[KeyboardButton(Keys.S)]
 		public ButtonControl ShootDown { get; private set; }
 
 		[KeyboardButton(Keys.Left)]
@@ -37,6 +39,7 @@ namespace LD46
 
 		[KeyboardButton(Keys.Z)]
 		[KeyboardButton(Keys.Enter)]
+		[KeyboardButton(Keys.Space)]
 		public ButtonControl Action { get; private set; }
 
 		[KeyboardButton(Keys.X)]

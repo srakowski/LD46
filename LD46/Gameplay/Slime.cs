@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Roy_T.AStar.Grids;
 using Roy_T.AStar.Paths;
 using Roy_T.AStar.Primitives;
+using System;
 using System.Collections;
 using System.Linq;
 using static LD46.Gameplay.Level;
@@ -40,7 +41,7 @@ namespace LD46.Gameplay
 
 			behavior = new SlimeBehavior(this, level).AddToEntity(this);
 
-			HP = (int)((rank + 1) * Settings.HPMultiplier);
+			HP = Settings.HP + (rank * 10);
 		}
 
 		public Tile Target => behavior.Target;
@@ -51,7 +52,7 @@ namespace LD46.Gameplay
 			if (HP <= 0)
 			{
 				Dead = true;
-				level.AddGold(10);
+				level.AddGold(1);
 			}
 		}
 
@@ -90,7 +91,7 @@ namespace LD46.Gameplay
 					if (nextTarget == null)
 					{
 						this.Entity.Dead = true;
-						// HIT
+						level.ReducePurity(1);
 						yield break;
 					}
 					Target = nextTarget;
@@ -115,6 +116,11 @@ namespace LD46.Gameplay
 				var mapPos = new Point((int)(pos.X / 16), (int)(pos.Y / 16));
 				return level.GetTileAt(mapPos);
 			}
+		}
+
+		internal int Hit(object p)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

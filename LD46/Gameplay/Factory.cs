@@ -46,44 +46,43 @@ namespace LD46.Gameplay
 
 			var goldText = Text.New.Configure(gt =>
 			{
-				gt.Value = "150";
+				gt.Width = 200;
+				gt.Value = "Gold: ";
 				gt.Font = "Serif";
 				gt.Size = 14;
-				gt.Align = Align.Center;
+				gt.Align = Align.Near;
 				gt.Anchor = Anchor.TopLeft;
 				gt.Origin = Anchor.TopLeft;
 			});
 
-			var v = new Manager(level, goldText);
+
+			var purityText = Text.New.Configure(gt =>
+			{
+				gt.Width = 200;
+				gt.Value = "Purity: ";
+				gt.Font = "Serif";
+				gt.Size = 14;
+				gt.Align = Align.Near;
+				gt.Anchor = Anchor.TopLeft;
+				gt.Origin = Anchor.TopLeft;
+				gt.Offset = new Microsoft.Xna.Framework.Point(0, 30);
+			});
+
+			var v = new Manager(level, goldText, purityText);
 			level.Manager = v;
 
 			var view = new View();
-			view.AddElement(goldText);
-
-
-
-			//var view = new View(
-			//			var view = View.New.AddElement(
-			//	Div.New
-			//	.Configure(page =>
-			//	{
-			//		page.Dock = Dock.Fill;
-			//	})
-			//	.AddElement(
-			//		Text.New.Configure(title =>
-			//		{
-			//			title.Value = "LDJAM46 GAME";
-			//			title.Font = "Serif";
-			//			title.Size = 48;
-			//			title.Align = Align.Center;
-			//			title.Anchor = Anchor.Center;
-			//			title.Offset.Y = -200;
-			//			title.Width = TowerDefenseGame.GameWidth;
-			//			title.Origin = Anchor.Center;
-			//		})
-			//	)
-			//	.AddElement(options)
-			//);
+			view.AddElement(Div.New
+				.Configure(d =>
+				{
+					d.Height = 100;
+					d.Anchor = Anchor.BottomLeft;
+					d.Origin = Anchor.BottomLeft;
+				})
+				.AddElement(
+					goldText,
+					purityText
+			));
 
 			var pickers = new Dictionary<TurretyType, TurretPicker>()
 			{
