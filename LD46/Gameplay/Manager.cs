@@ -29,11 +29,11 @@ namespace LD46.Gameplay
 
 		private IEnumerator RunGame()
 		{
-			yield return Wait.Duration(30000);
-			for (int i = 0; i < 100; i++)
+			yield return Wait.Duration(10000);
+			for (int i = 0; i < 10000; i++)
 			{
 				level.SlimeSpawner.SpawnWave(20 * (i + 1), i);
-				yield return Wait.Duration(30000);
+				yield return Wait.Duration(20000 + (1000 * i));
 			}
 		}
 

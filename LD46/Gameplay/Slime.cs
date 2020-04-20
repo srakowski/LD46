@@ -17,6 +17,7 @@ namespace LD46.Gameplay
 		private Level level;
 		private SlimeBehavior behavior;
 		private int HP;
+		public float speed;
 
 		public Slime(Level level, float depth, int rank)
 		{
@@ -42,6 +43,7 @@ namespace LD46.Gameplay
 			behavior = new SlimeBehavior(this, level).AddToEntity(this);
 
 			HP = Settings.HP + (rank * 10);
+			speed = Settings.SlimeSpeed + (rank * 0.0001f);
 		}
 
 		public Tile Target => behavior.Target;
@@ -82,7 +84,7 @@ namespace LD46.Gameplay
 					{
 						var direction = Target.Position - this.Entity.Position;
 						direction.Normalize();
-						var velocity = direction * Settings.SlimeSpeed;
+						var velocity = direction * slime.speed;
 						Entity.Position += velocity * (float)GameTime.ElapsedGameTime.TotalMilliseconds;
 						yield return Wait.None();
 					}
